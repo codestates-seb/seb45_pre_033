@@ -1,6 +1,7 @@
-package preproject.spring.question.entity;
+package preproject.spring.tag.entity;
 
 import lombok.*;
+import preproject.spring.question.entity.QuestionTag;
 
 import javax.persistence.*;
 import java.util.List;
