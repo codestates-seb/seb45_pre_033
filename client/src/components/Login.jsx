@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import styled from "styled-components";
+import MainBut from "./MainBut";
 
 const Container = styled.div`
   display: flex;
@@ -18,27 +19,14 @@ const Icon = styled.img`
   height: 50px;
   width: 50px;
 `;
-const Button = styled.button`
-  width: 150px;
-  height: 40px;
-  border-radius: 10px;
-  margin-top: 15px;
-  color: #43347d;
-  font-size: 22px;
-  font-weight: bold;
-  padding-top: 4px;
-  border: none;
-`;
 
 export default function Login() {
-    const title = "Yeongho overflow";
+  const title = "Yeongho overflow";
+  const [login,setLogin]=useState(false)
     return (
         <Container>
-                <Title><Icon src="../sofLogo.png" />{title}</Title>
-                <Container>
-                    <Button>회원가입</Button>
-                    <Button>로그인</Button>
-                </Container>
+          <Title><Icon src="../sofLogo.png" />{title}</Title>
+        {<MainBut />}
         </Container>
     )
 }
