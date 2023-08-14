@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Login from "../components/Login";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -14,31 +15,12 @@ const BodyContainer = styled.div`
   background-position: center;
   min-height: 850px;
 `;
-const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-`
-const Title = styled.div`
-    color: white;
-    font-weight: bold;
-    font-size: 40px;
-`
-const Icon = styled.img`
-    height: 50px;
-    width : 50px;
-`
 
 
 export default function MainPage() {
-    const title = "Yeoungho overflow";
     return (
         <BodyContainer>
-            <PageContainer>
-                <Title><Icon src="../sofLogo.png" />{title}</Title>
-            </PageContainer>
+            <Login/>
         </BodyContainer>
     )
 }
