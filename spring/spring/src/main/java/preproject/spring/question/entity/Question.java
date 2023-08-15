@@ -1,6 +1,8 @@
 package preproject.spring.question.entity;
 
 import lombok.*;
+import preproject.spring.User.entity.User;
+import preproject.spring.answer.Entity.Answer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,7 +26,6 @@ public class Question {
     @Column
     private String content;
 
-    @Column(nullable = false)
     private String writer;
 
     @Column(nullable = false)
@@ -33,12 +34,12 @@ public class Question {
     @Column(nullable = false)
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID")
-//    private User user;
+     @ManyToOne
+     @JoinColumn(name = "USER_ID")
+     private User user;
 
-//    @OneToMany(mappedBy = "question")
-//    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
     private List<QuestionTag> questionTags;
