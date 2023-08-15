@@ -1,7 +1,8 @@
-package preproject.spring.User;
+package preproject.spring.User.entity;
 
 
 import lombok.*;
+import preproject.spring.answer.Entity.Answer;
 
 import javax.persistence.*;
 
@@ -16,11 +17,13 @@ public class Vote {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voteId;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
 
-    //@ManyToOne
-    //private Answer answer;
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answer answer;
 
     @Column
     private Boolean press = true;
