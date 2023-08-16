@@ -23,6 +23,7 @@ public class QuestionService {
 
     public Question createQuestion(Question question){
 
+        question.setCreatedAt(LocalDateTime.now());
         return questionRepository.save(question);
     }
 
