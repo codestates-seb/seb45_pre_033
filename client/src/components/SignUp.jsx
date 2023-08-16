@@ -165,7 +165,7 @@ export default function SignUp({ handleShowSignUp }) {
             console.log("success!")
             handleShowSignUp();
             }).catch(err => {
-            console.log(err.status)
+            console.log(err.response.status)
         })
     }
 
