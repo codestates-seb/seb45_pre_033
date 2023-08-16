@@ -27,7 +27,7 @@ public class AnswerController {
         try {
 
             answerReqDto.setQuestionId(questionId); // 질문 아이디
-            answerReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정) test 할 때 사용함
+            answerReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정하기) test 할 때 사용함
 
             AnswerResDto answerResDto = answerService.createAnswer(answerReqDto);
 
@@ -82,6 +82,5 @@ public class AnswerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
 }
