@@ -31,7 +31,7 @@ public class Question {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
      @ManyToOne
