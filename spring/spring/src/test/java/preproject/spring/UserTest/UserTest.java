@@ -3,11 +3,21 @@ package preproject.spring.UserTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import preproject.spring.User.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import preproject.spring.User.entity.User;
+import preproject.spring.User.mapper.UserDto;
+import preproject.spring.User.mapper.UserMapper;
+import preproject.spring.User.repository.UserRepository;
+import preproject.spring.User.service.UserService;
 
-import static preproject.spring.User.User.Role.USER;
+import java.util.Optional;
+
+import static preproject.spring.User.entity.User.Role.USER;
 
 class UserTest {
+
+    PasswordEncoder passwordEncoder;
+
 
     @DisplayName("성공적인 User 데이터")
     @Test
@@ -17,7 +27,7 @@ class UserTest {
                 .email("example@gmail.com")
                 .password("example")
                 .profile_message("hello")
-                .imageurl("hi.png")
+                .image_url("hi.png")
                 .role(USER)
                 .build()
                 ;
@@ -30,7 +40,22 @@ class UserTest {
 
         Assertions.assertEquals("example@gmail.com",user.getEmail());
         Assertions.assertEquals("hello",user.getProfile_message());
-        Assertions.assertEquals("hi.png",user.getImageurl());
+        Assertions.assertEquals("hi.png",user.getImage_url());
         Assertions.assertEquals(USER,user.getRole());
     }
+
+    @DisplayName("비밀번호 암호화 시도")
+    @Test
+    void postUser(){
+
+
+        UserDto.Post post = new UserDto.Post("example@gmail.com","abc123","example");
+        String encryptPassword = passwordEncoder.encode(post.getPassword());
+
+        Assertions.assertNotNull(post.getPassword());
+        Assertions.assertNotNull(encryptPassword);
+
+    }
+
+
 }
