@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import styled from "styled-components";
 
 const SignUpContainer = styled.div`
@@ -70,15 +70,23 @@ export default function SignUp() {
     const [infor, setInfor] = useState({
         email: ``,
         password: ``,
-        passwordCheck:``
+        passwordCheck: ``
     });
+    
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setInfor(prev => ({
+            ...prev,
+            [name]:value
+        }))
+    }
     
     return (
         <SignUpContainer>
             <SignUpInputContainer>
-                <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" /><Button>중복확인</Button></InputLabel>
-                <InputLabel>비밀번호<SignUpInput type="password"value={infor.password} name="password"/></InputLabel>
-                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck"/></InputLabel>
+                <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" onChange={handleInputChange}/><Button>중복확인</Button></InputLabel>
+                <InputLabel>비밀번호<SignUpInput type="password"value={infor.password} name="password" onChange={handleInputChange}/></InputLabel>
+                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck" onChange={handleInputChange}/></InputLabel>
             </SignUpInputContainer>
             <ButtonContainer>
                 <Button>취소</Button>
