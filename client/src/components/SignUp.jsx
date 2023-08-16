@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
 import styled from "styled-components";
+import axios from "axios"
 
 const SignUpContainer = styled.div`
     height: 100vh;
@@ -14,7 +15,8 @@ const SignUpInputContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: end;
-    gap: 20px;
+    gap: 10px;
+    margin-left: 20px;
 `
 const InputLabel = styled.label`
   font-size: 24px;
@@ -48,7 +50,7 @@ const SignUpInputEmail = styled.input`
     margin-right: 12px;
 `
 const Button = styled.button`
-  width: 115px;
+  width: 116px;
   height: 40px;
   border-radius: 10px;
   margin-top: 15px;
@@ -64,15 +66,72 @@ const Button = styled.button`
 const ButtonContainer = styled.div`
     display: flex;
     gap : 20px;
+    margin-left: 30px;
 `
+const Alert = styled.h4`
+  height: 20px;
+  width: 500px;
+  text-align: center;
+  color: ${(props) => (props.green ? "greenyellow" : "red")};
+  font-size: 18px;
+`;
 
-export default function SignUp() {
+export default function SignUp({ handleShowSignUp }) {
+
+    const [emailChecked, setEmailChecked] = useState(false);
+    const [emailValid, setEmailValid] = useState(false);
+    const [passwordValid, setPasswordValid] = useState(false);
+    const [passwordChecked, setPasswordChecked] = useState(false);
+    const [emailAlert, setEmailAlert] = useState(0);
     const [infor, setInfor] = useState({
         email: ``,
         password: ``,
         passwordCheck: ``
     });
+    const emailAlerts = [
+        "",
+        "유효하지 않은 이메일입니다.",
+        "중복 확인이 필요합니다.",
+        "이미 사용 중인 이메일입니다."
+    ];
+
+    useEffect(() => {
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        if (emailRegex.test(infor.email)) {
+            setEmailValid(true)
+            setEmailAlert(2)
+        }else {
+            setEmailValid(false)
+            setEmailAlert(1)
+            if (infor.email === "") {
+                setEmailAlert(0)
+            }
+        }
+        if (emailChecked) {
+           setEmailChecked(false);
+        }
+    }, [infor.email])
     
+    useEffect(() => {
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    })
+
+    const emailCheck = () => {
+        const requestData = {
+            "email": infor.email,
+            "test":"whatever"
+        }
+        if (!emailValid) {
+            return
+        }
+        axios.post('/login/check', requestData)
+            .then(res => {
+            setEmailChecked(true)
+            }).catch(err => {
+            setEmailAlert(3)
+        })
+    }
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setInfor(prev => ({
@@ -80,17 +139,25 @@ export default function SignUp() {
             [name]:value
         }))
     }
-    
+    const handleSignUp = () => {
+        if (!emailChecked) {
+            return;
+        }
+    }
+
     return (
         <SignUpContainer>
             <SignUpInputContainer>
-                <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" onChange={handleInputChange}/><Button>중복확인</Button></InputLabel>
-                <InputLabel>비밀번호<SignUpInput type="password"value={infor.password} name="password" onChange={handleInputChange}/></InputLabel>
-                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck" onChange={handleInputChange}/></InputLabel>
+                <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" onChange={handleInputChange} /><Button onClick={emailCheck}>중복확인</Button></InputLabel>
+                {!emailChecked ? <Alert>{emailAlerts[emailAlert]}</Alert> : <Alert green>{"확인되었습니다."}</Alert>}
+                <InputLabel>비밀번호<SignUpInput type="password" value={infor.password} name="password" onChange={handleInputChange} /></InputLabel>
+                <Alert></Alert>
+                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck" onChange={handleInputChange} /></InputLabel>
+                <Alert></Alert>
             </SignUpInputContainer>
             <ButtonContainer>
-                <Button>취소</Button>
-                <Button>완료</Button>
+                <Button onClick={handleShowSignUp}>취소</Button>
+                <Button onClick={handleSignUp}>완료</Button>
             </ButtonContainer>
         </SignUpContainer>
     )

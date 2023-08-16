@@ -1,8 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import { Route, Routes } from "react-router-dom";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -20,9 +19,13 @@ const BodyContainer = styled.div`
 
 
 export default function MainPage() {
+    const [showSignUp, setShowSignUp] = useState(false);
+    const handleShowSignUp = () => {
+        setShowSignUp(!showSignUp)
+    }
     return (
         <BodyContainer>
-            <Login/>
+            {!showSignUp ? <Login handleShowSignUp={handleShowSignUp} /> : <SignUp handleShowSignUp={handleShowSignUp} />}
         </BodyContainer>
     )
 }

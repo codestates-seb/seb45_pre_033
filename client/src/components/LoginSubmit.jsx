@@ -63,38 +63,53 @@ const Alert = styled.div`
     text-align: center;
     width: 250px;
 `
-export default function LoginSubmit() {
+export default function LoginSubmit({ handleShowSignUp }) {
   const [idPw, setIdPw] = useState({
     ID: ``,
-    PW:``
-    })
-    const[alert1,setAlert1]=useState(false)
-    const[alert2,setAlert2]=useState(false)
+    PW: ``,
+  });
+  const [alert1, setAlert1] = useState(false);
+  const [alert2, setAlert2] = useState(false);
   const handleIdPwChange = (event) => {
     const { name, value } = event.target;
     setIdPw((prev) => ({
       ...prev,
       [name]: value,
     }));
-    }
-    return (
-      <Container>
-        <InputContainer>
-          <InputLabel>
-            아이디
-            <LoginInput type="text" name="ID" value={idPw.ID} onChange={handleIdPwChange}/>
-          </InputLabel>
-          {alert1 ? <Alert>일치하는 아이디가 없습니다.</Alert> : <></>}
-          <InputLabel>
-            비밀번호
-            <LoginInput type="password" name="PW" value={idPw.PW} onChange={handleIdPwChange} />
-          </InputLabel>
-          {alert2 ? <Alert>비밀번호가 일치하지 않습니다.</Alert> : <></>}
-        </InputContainer>
-        <LoginButtonContainer>
-          <Button onClick={() => setAlert2(!alert2)}>회원가입</Button>
-          <Button onClick={() => setAlert1(!alert1)}>로그인</Button>
-        </LoginButtonContainer>
-      </Container>
-    );
+  };
+  const handleLogin = () => {
+    setAlert1(!alert1);
+    setAlert2(!alert2);
+  };
+
+  return (
+    <Container>
+      <InputContainer>
+        <InputLabel>
+          아이디
+          <LoginInput
+            type="text"
+            name="ID"
+            value={idPw.ID}
+            onChange={handleIdPwChange}
+          />
+        </InputLabel>
+        {alert1 ? <Alert>일치하는 아이디가 없습니다.</Alert> : <></>}
+        <InputLabel>
+          비밀번호
+          <LoginInput
+            type="password"
+            name="PW"
+            value={idPw.PW}
+            onChange={handleIdPwChange}
+          />
+        </InputLabel>
+        {alert2 ? <Alert>비밀번호가 일치하지 않습니다.</Alert> : <></>}
+      </InputContainer>
+      <LoginButtonContainer>
+        <Button onClick={handleShowSignUp}>회원가입</Button>
+        <Button onClick={handleLogin}>로그인</Button>
+      </LoginButtonContainer>
+    </Container>
+  );
 }
