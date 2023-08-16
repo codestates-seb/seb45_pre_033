@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 
 const SignUpContainer = styled.div`
@@ -9,8 +9,18 @@ const SignUpContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+`
+const SignUpInputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     gap: 20px;
 `
+const InputLabel = styled.label`
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+`;
 const SignUpInput=styled.input`
     height: 40px;
     width: 250px;
@@ -22,6 +32,20 @@ const SignUpInput=styled.input`
     margin-left: 5px;
     border: none;
     padding-left: 7px;
+    margin-right: 128px;
+`
+const SignUpInputEmail = styled.input`
+    height: 40px;
+    width: 250px;
+    background-color: white;
+    border-radius: 10px;
+    color: #43347d;
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 5px;
+    border: none;
+    padding-left: 7px;
+    margin-right: 12px;
 `
 const Button = styled.button`
   width: 115px;
@@ -37,11 +61,29 @@ const Button = styled.button`
     font-size: 23px;
   }
 `;
+const ButtonContainer = styled.div`
+    display: flex;
+    gap : 20px;
+`
 
 export default function SignUp() {
+    const [infor, setInfor] = useState({
+        email: ``,
+        password: ``,
+        passwordCheck:``
+    });
+    
     return (
         <SignUpContainer>
-
+            <SignUpInputContainer>
+                <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" /><Button>중복확인</Button></InputLabel>
+                <InputLabel>비밀번호<SignUpInput type="password"value={infor.password} name="password"/></InputLabel>
+                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck"/></InputLabel>
+            </SignUpInputContainer>
+            <ButtonContainer>
+                <Button>취소</Button>
+                <Button>완료</Button>
+            </ButtonContainer>
         </SignUpContainer>
     )
 }

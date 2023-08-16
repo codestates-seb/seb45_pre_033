@@ -22,7 +22,7 @@ const BodyContainer = styled.div`
 export default function MainPage() {
     return (
         <BodyContainer>
-            <Login/>
+            <SignUp/>
         </BodyContainer>
     )
 }
