@@ -37,7 +37,7 @@ const Button = styled.button`
 `;
 
 const LogoutButton = styled(Button)`
-    color: red;
+    color: #eb7575;
 `;
 
 const LogoContainer = styled.h1`
