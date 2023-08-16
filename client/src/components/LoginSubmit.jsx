@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import axios from "axios";
 
 const InputLabel = styled.label`
     font-size: 24px;
@@ -78,8 +79,7 @@ export default function LoginSubmit({ handleShowSignUp }) {
     }));
   };
   const handleLogin = () => {
-    setAlert1(!alert1);
-    setAlert2(!alert2);
+    axios.post()
   };
 
   return (

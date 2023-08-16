@@ -72,7 +72,7 @@ const Alert = styled.h4`
   height: 20px;
   width: 500px;
   text-align: center;
-  color: ${(props) => (props.green ? "greenyellow" : "red")};
+  color: ${(props) => (props.green ? "greenyellow" : "coral")};
   font-size: 18px;
 `;
 
@@ -84,10 +84,10 @@ export default function SignUp({ handleShowSignUp }) {
     const [passwordChecked, setPasswordChecked] = useState(false);
     const [emailAlert, setEmailAlert] = useState(0);
     const [infor, setInfor] = useState({
-        email: ``,
-        password: ``,
-        passwordCheck: ``
+        "email": "",
+        "password": "",
     });
+    const [passwordCheck,setPasswordCheck]=useState("")
     const emailAlerts = [
         "",
         "유효하지 않은 이메일입니다.",
@@ -114,15 +114,37 @@ export default function SignUp({ handleShowSignUp }) {
     
     useEffect(() => {
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    })
-
+        if (passwordRegex.test(infor.password)) {
+            setPasswordValid(true);
+        } else {
+            setPasswordValid(false);
+        }
+    },[infor.password])
+    useEffect(() => {
+        if (passwordValid&&passwordCheck === infor.password) {
+            setPasswordChecked(true);
+        } else {
+            setPasswordChecked(false)
+        }
+    },[passwordCheck])
+    
+    const handlePasswordCheckChange = (event) => {
+        setPasswordCheck(event.target.value)
+    }
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setInfor(prev => ({
+            ...prev,
+            [name]:value
+        }))
+    }
     const emailCheck = () => {
+        if (!emailValid) {
+            return
+        }
         const requestData = {
             "email": infor.email,
             "test":"whatever"
-        }
-        if (!emailValid) {
-            return
         }
         axios.post('/login/check', requestData)
             .then(res => {
@@ -131,18 +153,19 @@ export default function SignUp({ handleShowSignUp }) {
             setEmailAlert(3)
         })
     }
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setInfor(prev => ({
-            ...prev,
-            [name]:value
-        }))
-    }
     const handleSignUp = () => {
-        if (!emailChecked) {
+        if (!emailChecked||!passwordValid||!passwordChecked) {
             return;
         }
+        const nickname = infor.email.split('@')[0]
+        const data = { ...infor, "nickname": nickname }
+        console.log(data)
+        axios.post('/login/create', data)
+            .then(res => {
+            console.log("success!")
+            }).catch(err => {
+            console.log(err.status)
+        })
     }
 
     return (
@@ -151,9 +174,9 @@ export default function SignUp({ handleShowSignUp }) {
                 <InputLabel>이메일<SignUpInputEmail type="text" value={infor.email} name="email" onChange={handleInputChange} /><Button onClick={emailCheck}>중복확인</Button></InputLabel>
                 {!emailChecked ? <Alert>{emailAlerts[emailAlert]}</Alert> : <Alert green>{"확인되었습니다."}</Alert>}
                 <InputLabel>비밀번호<SignUpInput type="password" value={infor.password} name="password" onChange={handleInputChange} /></InputLabel>
-                <Alert></Alert>
-                <InputLabel>비밀번호 확인<SignUpInput type="password" value={infor.passwordCheck} name="passwordCheck" onChange={handleInputChange} /></InputLabel>
-                <Alert></Alert>
+                <Alert>{infor.password!==""&&!passwordValid?"8자 이상, 숫자와 영문 대/소문자":""}</Alert>
+                <InputLabel>비밀번호 확인<SignUpInput type="password" value={passwordCheck} onChange={handlePasswordCheckChange} /></InputLabel>
+                <Alert>{passwordCheck!==""&&!passwordChecked&&passwordValid?"비밀번호가 일치하지 않습니다.":""}</Alert>
             </SignUpInputContainer>
             <ButtonContainer>
                 <Button onClick={handleShowSignUp}>취소</Button>
