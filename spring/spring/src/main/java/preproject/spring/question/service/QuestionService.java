@@ -1,5 +1,8 @@
 package preproject.spring.question.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import preproject.spring.Exception.ExceptionCode;
 import preproject.spring.Exception.LogicException;
@@ -39,15 +42,15 @@ public class QuestionService {
         return findVerifiedQuestion(questionId);
     }
 
-    public List<Question> findQuestions(){
-        return questionRepository.findAll();
+    public Page<Question> findQuestions(int page, int size){
+        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
-
 //    public Question deleteQuestion(Long questionId){
 //        Question question = findVerifiedQuestion(questionId);
 //
 //        questionRepository.delete(question);
 //    }
+
 
 
     private Question findVerifiedQuestion(Long questionId) {

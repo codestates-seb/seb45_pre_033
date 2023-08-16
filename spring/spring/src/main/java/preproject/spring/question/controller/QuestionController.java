@@ -1,18 +1,17 @@
 package preproject.spring.question.controller;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+//import preproject.spring.question.dto.QuestionPatchDto;
 import preproject.spring.question.dto.QuestionPostDto;
-import preproject.spring.question.dto.QuestionResponseDto;
 import preproject.spring.question.entity.Question;
 import preproject.spring.question.mapper.QuestionMapper;
 import preproject.spring.question.service.QuestionService;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/question")
@@ -27,7 +26,7 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto) {
+    public ResponseEntity<Question> postQuestion(@RequestBody QuestionPostDto questionPostDto) {
         Question question = questionService.createQuestion(mapper.questionPostDtoToQuestion(questionPostDto));
         URI location =
                 UriComponentsBuilder
@@ -39,25 +38,20 @@ public class QuestionController {
     }
 
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId){
+    public ResponseEntity<Question> getQuestion(@PathVariable("question-id") Long questionId){
         Question question = questionService.findQuestion(questionId);
 
-        return new ResponseEntity<>(
-                mapper.questionToQuestionResponseDto(question),HttpStatus.OK
-        );
+        return ResponseEntity.ok(question);
     }
 
     @GetMapping
-    public ResponseEntity getQuestions() {
-        List<Question> questions = questionService.findQuestions();
+    public ResponseEntity<List<Question>> getQuestions(@RequestParam int page,
+                                                       @RequestParam int size) {
+        Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
 
-        List<QuestionResponseDto> response =
-                questions
-                        .stream()
-                        .map(question -> mapper.questionToQuestionResponseDto(question))
-                        .collect(Collectors.toList());
+        List<Question> questions = pageQuestions.getContent();
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(questions);
     }
 
 }
