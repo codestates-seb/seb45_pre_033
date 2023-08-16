@@ -1,11 +1,10 @@
 package preproject.spring.tag.controller;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import preproject.spring.tag.dto.TagPostDto;
-import preproject.spring.tag.dto.TagResponseDto;
 import preproject.spring.tag.entity.Tag;
 import preproject.spring.tag.mapper.TagMapper;
 import preproject.spring.tag.service.TagService;
@@ -13,7 +12,6 @@ import preproject.spring.tag.service.TagService;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class TagController {
@@ -22,7 +20,7 @@ public class TagController {
     private TagService tagService;
     private TagMapper mapper;
     @PostMapping
-    public ResponseEntity postQuestion(@RequestBody TagPostDto tagPostDto) {
+    public ResponseEntity<Tag> postQuestion(@RequestBody TagPostDto tagPostDto) {
         Tag tag = tagService.createTag(mapper.tagPostDtoToQuestion(tagPostDto));
         URI location =
                 UriComponentsBuilder
@@ -32,16 +30,19 @@ public class TagController {
                         .toUri();
         return ResponseEntity.created(location).build();
     }
+    @GetMapping("/{tag-id}")
+    public ResponseEntity<Tag> getTag(@PathVariable("tag-id") Long tagId) {
+        Tag tag = tagService.findTag(tagId);
+
+        return ResponseEntity.ok(tag);
+    }
     @GetMapping
-    public ResponseEntity getTags() {
-        List<Tag> tags = tagService.findTags();
+    public ResponseEntity<List<Tag>> getTags(@RequestParam int page,
+                                  @RequestParam int size) {
+        Page<Tag> pageTags = tagService.findTags(page-1, size);
 
-        List<TagResponseDto> response =
-               tags
-                        .stream()
-                        .map(tag -> mapper.tagToTagResponseDto(tag))
-                        .collect(Collectors.toList());
+        List<Tag> tags = pageTags.getContent();
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok(tags);
     }
 }
