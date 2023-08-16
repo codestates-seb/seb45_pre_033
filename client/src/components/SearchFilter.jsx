@@ -5,24 +5,13 @@ export default function Searchfilter () {
     const [toggleState, setToggleState] = useState(0);
     
     const handleToggle = () => {
-        setToggleState((prevState) => (prevState + 1) % 4);
+        setToggleState((prevState) => (prevState + 1));
         if (toggleState === 2) {
           setToggleState(0);
         }
       };
-
-    const renderToggleMessage = () => {
-        switch (toggleState) {
-          case 0:
-            return '제목';
-          case 1:
-            return '작성자';
-          case 2:
-            return '태그';
-          default:
-            return '';
-    }
-    };
+    
+    const toggleArr = ['제목','작성자','태그'];
 
     const Button = styled.button`
         background-color: white;
@@ -38,6 +27,6 @@ export default function Searchfilter () {
     `;
 
       return (
-        <Button onClick={handleToggle}>{renderToggleMessage()}</Button>
+        <Button onClick={handleToggle}>{toggleArr[toggleState]}</Button>
       )
 }
