@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Login from "../components/Login";
+import SignUp from "../components/SignUp";
+import { Route, Routes } from "react-router-dom";
 
 const BodyContainer = styled.div`
   display: flex;

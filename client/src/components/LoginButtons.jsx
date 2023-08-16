@@ -8,11 +8,11 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default function LoginButtons({ Button, setLogin }) {
+export default function LoginButtons({ Button, setShowLogin }) {
   return (
     <Container>
       <Button>회원가입</Button>
-      <Button onClick={()=>setLogin(true)}>로그인</Button>
+      <Button onClick={() => setShowLogin(true)}>로그인</Button>
     </Container>
   );
 }

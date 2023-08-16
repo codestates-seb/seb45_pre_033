@@ -39,11 +39,12 @@ const Button = styled.button`
 
 export default function Login() {
   const title = "Yeongho overflow";
-  const [login,setLogin]=useState(false)
+  const [showLogin,setShowLogin]=useState(false)
+  const [showSignUp, setShowSignUp] = useState(false);
     return (
         <Container>
           <Title><Icon src="../sofLogo.png" />{title}</Title>
-        {login ? <LoginSubmit/>:<LoginButtons Button={ Button} setLogin={setLogin} />}
+        {showLogin ? <LoginSubmit/>:<LoginButtons Button={ Button} setShowLogin={setShowLogin} />}
         </Container>
     )
 }

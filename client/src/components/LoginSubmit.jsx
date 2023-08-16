@@ -13,9 +13,10 @@ const LoginInput=styled.input`
     border-radius: 10px;
     color: #43347d;
     font-size: 22px;
-    font-weight: 400;
+    font-weight: bold;
     margin-left: 5px;
     border: none;
+    padding-left: 7px;
 `
 const Container = styled.div`
   display: flex;
@@ -28,15 +29,16 @@ const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: end;
-    width: 300px;
+    width: 400px;
     gap: 8px;
     margin-top: 15px;
+    padding-right: 60px;
 `;
 const LoginButtonContainer = styled.div`
     display: flex;
     justify-content: end;
     gap: 20px;
-    width: 300px;
+    width: 280px;
     height:40px ;
 `;
 const Button = styled.button`
@@ -69,13 +71,13 @@ export default function LoginSubmit() {
       <Container>
         <InputContainer>
           <InputLabel>
-            ID
-            <LoginInput />
+            아이디
+            <LoginInput type="text"/>
           </InputLabel>
           {alert1 ? <Alert>일치하는 아이디가 없습니다.</Alert> : <></>}
           <InputLabel>
-            PW
-            <LoginInput />
+            비밀번호
+            <LoginInput type="password"/>
           </InputLabel>
           {alert2 ? <Alert>비밀번호가 일치하지 않습니다.</Alert> : <></>}
         </InputContainer>
