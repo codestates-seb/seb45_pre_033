@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import preproject.spring.User.User;
+import preproject.spring.User.entity.User;
 import preproject.spring.question.entity.Question;
 
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter @Setter @Entity
+@Getter@Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Answer {
