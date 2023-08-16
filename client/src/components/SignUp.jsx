@@ -163,6 +163,7 @@ export default function SignUp({ handleShowSignUp }) {
         axios.post('/login/create', data)
             .then(res => {
             console.log("success!")
+            handleShowSignUp();
             }).catch(err => {
             console.log(err.status)
         })

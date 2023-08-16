@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 
 const InputLabel = styled.label`
@@ -65,21 +65,40 @@ const Alert = styled.div`
     width: 250px;
 `
 export default function LoginSubmit({ handleShowSignUp }) {
-  const [idPw, setIdPw] = useState({
-    ID: ``,
-    PW: ``,
+  const [emailPassword, setEmailPassword] = useState({
+    "email": "",
+    "password": "",
   });
   const [alert1, setAlert1] = useState(false);
   const [alert2, setAlert2] = useState(false);
-  const handleIdPwChange = (event) => {
+  const handleEmailPasswordChange = (event) => {
     const { name, value } = event.target;
-    setIdPw((prev) => ({
+    setEmailPassword((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+  useEffect(() => {
+    setAlert1(false)
+    setAlert2(false)
+  },[emailPassword])
   const handleLogin = () => {
-    axios.post()
+    axios.post("/login", emailPassword)
+      .then(res => {
+      console.log("success")
+      }).catch(err => {
+        if (err.response.status === 404) {
+        setAlert1(true)
+          if (alert2) {
+          setAlert2(false)
+        }
+        }else if(err.response.status===409){
+          setAlert2(true)
+          if (alert1) {
+            setAlert1(false)
+          }
+      }
+    })
   };
 
   return (
@@ -89,9 +108,9 @@ export default function LoginSubmit({ handleShowSignUp }) {
           아이디
           <LoginInput
             type="text"
-            name="ID"
-            value={idPw.ID}
-            onChange={handleIdPwChange}
+            name="email"
+            value={emailPassword.email}
+            onChange={handleEmailPasswordChange}
           />
         </InputLabel>
         {alert1 ? <Alert>일치하는 아이디가 없습니다.</Alert> : <></>}
@@ -99,9 +118,9 @@ export default function LoginSubmit({ handleShowSignUp }) {
           비밀번호
           <LoginInput
             type="password"
-            name="PW"
-            value={idPw.PW}
-            onChange={handleIdPwChange}
+            name="password"
+            value={emailPassword.password}
+            onChange={handleEmailPasswordChange}
           />
         </InputLabel>
         {alert2 ? <Alert>비밀번호가 일치하지 않습니다.</Alert> : <></>}
