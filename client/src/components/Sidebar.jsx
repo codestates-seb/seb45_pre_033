@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const SidebarContainer = styled.div`
   width: 160px;
@@ -52,7 +52,6 @@ export default function Sidebar () {
   return (
     <SidebarContainer>
        <ListContainer>
-        <BrowserRouter>
           <StyledNavLink to='/questions' activeClassName ='active'>
             <List>질문</List>
           </StyledNavLink>
@@ -62,7 +61,6 @@ export default function Sidebar () {
           <StyledNavLink to='/groups' activeClassName ='active'>
             <List>그룹</List>
           </StyledNavLink>
-        </BrowserRouter>
        </ListContainer>
     </SidebarContainer>
   )
