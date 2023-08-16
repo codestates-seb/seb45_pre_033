@@ -9,4 +9,5 @@ public interface UserMapper {
 
     User userPostChanger(UserDto.Post userpost);
     User userPatchChanger(UserDto.Patch userpatch);
+    UserDto.Response userResponseChanger(User user);
 }

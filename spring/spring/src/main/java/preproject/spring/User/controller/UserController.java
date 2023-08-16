@@ -15,6 +15,7 @@ import preproject.spring.User.service.UserService;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("")
@@ -52,18 +53,18 @@ public class UserController {
     }
 
     @PatchMapping("/user/mypage/{user-id}") //마이페이지에서 user정보 수정 시 (주소로는 id값, email,nickname,profile message/image가 들어옴)
-    public ResponseEntity<User> patchMyUser(@PathVariable("user-id") Long userId,
+    public ResponseEntity<UserDto.Response> patchMyUser(@PathVariable("user-id") Long userId,
                                             @RequestBody UserDto.Patch userpatch) {
         User Changer = mapper.userPatchChanger(userpatch);
         Changer.setUserId(userId);
-        User user = service.updateUser(Changer);
+        UserDto.Response user = mapper.userResponseChanger(service.updateUser(Changer));
 
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/user/mypage/{user-id}") // 마이페이지 조회 시
-    public ResponseEntity<User> getMyUser(@PathVariable("user-id") Long userId){
-        User user = service.findUser(userId);
+    public ResponseEntity<UserDto.Response> getMyUser(@PathVariable("user-id") Long userId){
+        UserDto.Response user = mapper.userResponseChanger(service.findUser(userId));
 
         return ResponseEntity.ok(user);
     }
@@ -76,10 +77,14 @@ public class UserController {
     }
 
     @GetMapping("/search/users")
-    public ResponseEntity<List<User>> searchUsers(@RequestParam int page,
+    public ResponseEntity<List<UserDto.Response>> searchUsers(@RequestParam int page,
                                                   @RequestParam int size){
         Page<User> pageMembers = service.findUsers(page - 1, size);
-        List<User> users = pageMembers.getContent();
+        List<UserDto.Response> users =
+                pageMembers.getContent()
+                        .stream()
+                        .map(mapper::userResponseChanger)
+                        .collect(Collectors.toList());
 
         return ResponseEntity.ok(users);
     }
