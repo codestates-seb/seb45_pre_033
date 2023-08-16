@@ -64,20 +64,30 @@ const Alert = styled.div`
     width: 250px;
 `
 export default function LoginSubmit() {
+  const [idPw, setIdPw] = useState({
+    ID: ``,
+    PW:``
+    })
     const[alert1,setAlert1]=useState(false)
     const[alert2,setAlert2]=useState(false)
-    
+  const handleIdPwChange = (event) => {
+    const { name, value } = event.target;
+    setIdPw((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    }
     return (
       <Container>
         <InputContainer>
           <InputLabel>
             아이디
-            <LoginInput type="text"/>
+            <LoginInput type="text" name="ID" value={idPw.ID} onChange={handleIdPwChange}/>
           </InputLabel>
           {alert1 ? <Alert>일치하는 아이디가 없습니다.</Alert> : <></>}
           <InputLabel>
             비밀번호
-            <LoginInput type="password"/>
+            <LoginInput type="password" name="PW" value={idPw.PW} onChange={handleIdPwChange} />
           </InputLabel>
           {alert2 ? <Alert>비밀번호가 일치하지 않습니다.</Alert> : <></>}
         </InputContainer>
