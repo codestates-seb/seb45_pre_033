@@ -21,6 +21,15 @@ public class UserDto {
 
     @Getter
     @AllArgsConstructor
+    public static class Login{
+        private String email;
+
+        private String password;
+
+    }
+
+    @Getter
+    @AllArgsConstructor
     public static class Post{
 
         //유효성 검증 validation -not space, 혹은 정규 패턴식 추가 가능.
