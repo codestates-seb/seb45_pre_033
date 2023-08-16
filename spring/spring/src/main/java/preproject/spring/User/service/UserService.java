@@ -30,8 +30,25 @@ public class UserService {
     @Transactional(readOnly = true)
     public Boolean checkEmail(String email){
 
-        return repository.findByEmail(email).isEmpty();
+        return repository.findOptionalByEmail(email).isEmpty();
     }
+
+    //암호화된 비밀번호 비교
+    private boolean authenticate(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    //비밀번호 맞는지 체크
+    public Boolean checkPassword(String email ,String password){
+        User user = repository.findByEmail(email);
+        return authenticate(password, user.getPassword());
+
+    }
+
+    public User loginUser(String email){
+        return repository.findByEmail(email);
+    }
+
 
     public User createUser(User user){
         //email 검증
@@ -80,7 +97,7 @@ public class UserService {
 
 
     private void verifyEmail(String email){
-        Optional<User> user = repository.findByEmail(email);
+        Optional<User> user = repository.findOptionalByEmail(email);
         if (user.isPresent())
             throw new LogicException(ExceptionCode.USER_EXISTS);
 
