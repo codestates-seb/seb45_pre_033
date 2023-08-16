@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import preproject.spring.User.entity.User;
-import preproject.spring.question.entity.Question;
 
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter@Setter
-@Entity
+@Getter @Setter @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Answer {
@@ -20,18 +17,18 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
+    //@ManyToOne
+    //@JoinColumn(name = "question_id")
+    //private Question question;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@ManyToOne
+    //JoinColumn(name = "user_id")
+    //private User user;
 
     @Column
     private String content;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 
 }

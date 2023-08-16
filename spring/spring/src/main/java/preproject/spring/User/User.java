@@ -1,8 +1,7 @@
-package preproject.spring.User.entity;
+package preproject.spring.User;
 
 
 import lombok.*;
-import preproject.spring.question.entity.Question;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "users")
 public class User {
 
     @Id@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,16 +36,16 @@ public class User {
     private String profile_message;
 
     @Column
-    private String image_url;
+    private String imageurl;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "user")
-    private List<Question> questions = new ArrayList<>();
+    //@OneToMany(mappedBy = "user")
+    //private List<question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Vote> voteList = new ArrayList<>();
