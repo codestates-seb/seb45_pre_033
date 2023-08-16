@@ -2,6 +2,10 @@ package preproject.spring.User.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import preproject.spring.question.entity.Question;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class UserDto {
@@ -41,6 +45,25 @@ public class UserDto {
         private String image_url;
 
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Response{
+
+        private String email;
+
+        private String nickname;
+
+        private String profile_message;
+
+        private String image_url;
+
+        private LocalDateTime createdAt;
+
+        private LocalDateTime modifiedAt;
+
+        private List<Question> questions;
     }
 
 
