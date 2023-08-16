@@ -2,6 +2,7 @@ package preproject.spring.User;
 
 
 import lombok.*;
+import preproject.spring.question.entity.Question;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "users")
 @Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,8 +46,8 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    //@OneToMany(mappedBy = "user")
-    //private List<question> questions = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Vote> voteList = new ArrayList<>();

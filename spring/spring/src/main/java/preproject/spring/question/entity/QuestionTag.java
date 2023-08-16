@@ -1,6 +1,9 @@
 package preproject.spring.question.entity;
 
 
+
+import preproject.spring.tag.entity.Tag;
+
 import javax.persistence.*;
 
 @Entity
