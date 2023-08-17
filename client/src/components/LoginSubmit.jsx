@@ -85,7 +85,8 @@ export default function LoginSubmit({ handleShowSignUp }) {
   const handleLogin = () => {
     axios.post("/login", emailPassword)
       .then(res => {
-      console.log("success")
+        console.log("success")
+        console.log(res.data)
       }).catch(err => {
         if (err.response.status === 404) {
         setAlert1(true)
