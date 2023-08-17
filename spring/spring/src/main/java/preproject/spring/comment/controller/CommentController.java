@@ -21,21 +21,16 @@ import preproject.spring.comment.service.CommentService;
     }
 
     // 등록
-    @PostMapping("/{answer-id}")
-    public ResponseEntity<CommentDto.Response> createComment(@PathVariable(value = "answer-id") Long answerId,
-                                                             @RequestBody CommentDto.Post commentpost) throws Exception {
+    @PostMapping("/{answer_id}")
+    public ResponseEntity<CommentResDto> createComment(@PathVariable(value = "answer_id") Long answer_id, @RequestBody CommentReqDto commentReqDto) throws Exception {
         try {
-            Comment comment =commentService.createComment(mapper.commentPostChanger(commentpost));
-            // comment에 유저정보 및 Answer에 연결해야 함.
-            // ex create Service 안에서 혹은 받는값으로 연결.
-            //comment.setAnswer();  // <- 여기에 Answer찾는걸 넣어야 함.
-            // AnswerService를 연결해서 Answer가져오는 로직을 가져와 사용하던가, 혹은
-            // CommentService에서 해당 Answer 를 검색해 가져와야 함.
+            commentReqDto.setAnswerId(answer_id);
+            commentReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정)
 
 
-            CommentDto.Response ResComment = mapper.commentResponseChanger(comment);
+            CommentResDto comment = commentService.createComment(commentReqDto);
 
-            return new ResponseEntity<>(ResComment, HttpStatus.CREATED); // 204 없으면 500
+            return new ResponseEntity<>(comment, HttpStatus.CREATED); // 204 없으면 500
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

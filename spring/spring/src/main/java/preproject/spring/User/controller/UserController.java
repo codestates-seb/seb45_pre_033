@@ -31,7 +31,7 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    @GetMapping("/login/check") //이메일 검증하는곳
+    @PostMapping("/login/check") //이메일 검증하는곳
     public ResponseEntity<User> checkEmail(@RequestBody UserDto.Check email){
         //존재할 경우 409에러
         if(service.checkEmail(email.getEmail())){
@@ -52,7 +52,7 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserDto.Response> loginUser(@RequestBody UserDto.Login userlogin){
         if(service.checkEmail(userlogin.getEmail())){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
