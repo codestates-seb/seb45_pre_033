@@ -1,14 +1,12 @@
 package preproject.spring.question.dto;
 
 import lombok.Getter;
-
-import java.util.List;
-
+import lombok.Setter;
 
 @Getter
-public class QuestionPostDto {
-    private Long userId;
+@Setter
+public class QuestionPatchDto {
+    private Long questionId;
     private String title;
     private String content;
-    private List<QuestionTagDto> questionTags;
 }
