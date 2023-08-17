@@ -1,32 +1,47 @@
 package preproject.spring.comment.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import preproject.spring.User.entity.User;
 import preproject.spring.answer.Entity.Answer;
+import preproject.spring.comment.dto.CommentReqDto;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
-    @Column
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "user_id")
+    private User user;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column
+    private String content;
+    @Builder(builderMethodName = "createComment")
+    public Comment(Answer answer, User user, String content) {
+        this.answer = answer;
+        this.user = user;
+        this.content = content;
+    }
+
+    public void updateComment(CommentReqDto commentReqDto) {
+        if(commentReqDto.getContent() != null) {
+            this.content = commentReqDto.getContent();
+        }
+    }
 }
