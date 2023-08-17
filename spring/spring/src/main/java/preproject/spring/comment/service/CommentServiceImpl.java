@@ -21,18 +21,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public CommentResDto createComment(CommentReqDto commentReqDto) throws Exception {
+    public Comment createComment(Comment comments) throws Exception {
         try {
-            Comment comment = commentReqDto.createComment();
-            commentRepository.save(comment);
 
-            return CommentResDto.createCommentResDto()
-                    .comment_id(comment.getCommentId())
-                    .answer_id(comment.getAnswer().getAnswerId())
-                    .user_id(comment.getUser().getEmail())
-                    .content(comment.getContent())
-                    .createdAt(comment.getCreatedAt())
-                    .build();
+            return commentRepository.save(comments);
 
         }catch (Exception e) {
             e.printStackTrace();
