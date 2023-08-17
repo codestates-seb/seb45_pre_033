@@ -2,6 +2,7 @@ package preproject.spring.answer.Entity;
 
 import lombok.*;
 import preproject.spring.User.entity.User;
+import preproject.spring.User.entity.Vote;
 import preproject.spring.answer.dto.AnswerReqDto;
 import preproject.spring.comment.Entity.Comment;
 import preproject.spring.question.entity.Question;
@@ -36,6 +37,7 @@ public class Answer {
 
     @OneToMany(mappedBy = "answer")
     private List<Comment> comment = new ArrayList<>();
+
 
     @Builder(builderMethodName = "createAnswer")
     public Answer(Question question, User user, String content) {

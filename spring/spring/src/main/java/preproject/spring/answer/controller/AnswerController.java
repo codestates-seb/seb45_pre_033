@@ -21,13 +21,13 @@ public class AnswerController {
     }
 
     // 답변 등록
-    @PostMapping("/{question_id}")
-    public ResponseEntity<AnswerResDto> createAnswer(@PathVariable(value = "question_id") Long questionId,
+    @PostMapping("/{question_id}/{user_id}")
+    public ResponseEntity<AnswerResDto> createAnswer(@PathVariable(value = "question_id") Long questionId, @PathVariable(value = "user_id") Long userId,
                                                      @RequestBody AnswerReqDto answerReqDto) throws Exception {
         try {
 
-            answerReqDto.setQuestionId(questionId); // 질문 아이디
-            answerReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정하기) test 할 때 사용함
+            answerReqDto.setQuestionId(questionId);
+            answerReqDto.setUserId(userId);
 
             AnswerResDto answerResDto = answerService.createAnswer(answerReqDto);
 

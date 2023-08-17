@@ -8,7 +8,8 @@ import preproject.spring.comment.dto.CommentResDto;
 import preproject.spring.comment.service.CommentService;
 
 @RestController
-@RequestMapping("/answer/comment")public class CommentController {
+@RequestMapping("/answer/comment")
+public class CommentController {
     final CommentService commentService;
 
     public CommentController(CommentService commentService) {
@@ -16,12 +17,12 @@ import preproject.spring.comment.service.CommentService;
     }
 
     // 등록
-    @PostMapping("/{answer_id}")
-    public ResponseEntity<CommentResDto> createComment(@PathVariable(value = "answer_id") Long answer_id, @RequestBody CommentReqDto commentReqDto) throws Exception {
+    @PostMapping("/{answer_id}/{user_id}")
+    public ResponseEntity<CommentResDto> createComment(@PathVariable(value = "answer_id") Long answer_id, @PathVariable(value = "user_id") Long userId,
+                                                       @RequestBody CommentReqDto commentReqDto) throws Exception {
         try {
             commentReqDto.setAnswerId(answer_id);
-            commentReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정)
-
+            commentReqDto.setUserId(userId);
 
             CommentResDto comment = commentService.createComment(commentReqDto);
 

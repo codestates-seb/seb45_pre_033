@@ -36,17 +36,16 @@ public class AnswerServiceImpl implements AnswerService {
             answerRepository.save(answer);
 
             AnswerResDto answerResDto = new AnswerResDto();
-
             answerResDto.setAnswerId(answer.getAnswerId());
             answerResDto.setContent(answer.getContent());
             answerResDto.setQuestionId(answer.getQuestion().getQuestionId());
             answerResDto.setUserId(answer.getUser().getUserId());
             answerResDto.setCreatedAt(answer.getCreatedAt());
+            answerResDto.setComment(new ArrayList<>());
 
             return answerResDto;
 
         } catch (Exception e) {
-
             throw e;
         }
     }
@@ -68,12 +67,12 @@ public class AnswerServiceImpl implements AnswerService {
 
             List<CommentResDto> commentResDtoList = new ArrayList<>();
 
-            for(Comment comment : commentList) {
+            for(Comment comment : commentList) { // 클라이언트가 답변 목록을 요청했을 때, 각 답변에 대한 댓글 목록도 함께 반환하려는 목적으로 추가함
                 CommentResDto commentResDtoTmp = new CommentResDto();
                 commentResDtoTmp.setAnswer_id(answer.getAnswerId());
                 commentResDtoTmp.setComment_id(comment.getCommentId());
                 commentResDtoTmp.setContent(comment.getContent());
-                commentResDtoTmp.setUser_id(comment.getUser().getEmail());
+                commentResDtoTmp.setUser_id(comment.getUser().getUserId());
                 commentResDtoTmp.setCreatedAt(comment.getCreatedAt());
 
                 commentResDtoList.add(commentResDtoTmp);
@@ -97,20 +96,34 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     @Transactional
     public AnswerResDto updateAnswer(AnswerReqDto answerReqDto) throws Exception {
+
         try{
-            Optional<Answer> getAnswer = answerRepository.findById(answerReqDto.getAnswerId());
+            Optional<Answer> getAnswer = answerRepository.findByAnswerIdWithComment(answerReqDto.getAnswerId());
 
             Answer answer = getAnswer.orElseThrow(() -> new Exception("Answer not found for id: " + answerReqDto.getAnswerId()));
 
-            answer.updateAnswer(answerReqDto);
+            answer.updateAnswer(answerReqDto); // 업데이트
+
+            List<CommentResDto> commentResDtoList = new ArrayList<>();
+
+            for(Comment comment : answer.getComment()) {
+                CommentResDto commentResDtoTmp = new CommentResDto();
+                commentResDtoTmp.setAnswer_id(answer.getAnswerId());
+                commentResDtoTmp.setComment_id(comment.getCommentId());
+                commentResDtoTmp.setContent(comment.getContent());
+                commentResDtoTmp.setUser_id(comment.getUser().getUserId());
+                commentResDtoTmp.setCreatedAt(comment.getCreatedAt());
+
+                commentResDtoList.add(commentResDtoTmp);
+            }
 
             AnswerResDto answerResDto = new AnswerResDto();
-
             answerResDto.setAnswerId(answer.getAnswerId());
             answerResDto.setContent(answer.getContent());
             answerResDto.setQuestionId(answer.getQuestion().getQuestionId());
             answerResDto.setUserId(answer.getUser().getUserId());
             answerResDto.setCreatedAt(answer.getCreatedAt());
+            answerResDto.setComment(commentResDtoList);
 
             return answerResDto;
 

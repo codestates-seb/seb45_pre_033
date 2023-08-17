@@ -29,12 +29,12 @@ public class CommentServiceImpl implements CommentService {
             return CommentResDto.createCommentResDto()
                     .comment_id(comment.getCommentId())
                     .answer_id(comment.getAnswer().getAnswerId())
-                    .user_id(comment.getUser().getEmail())
+                    .user_id(comment.getUser().getUserId())
                     .content(comment.getContent())
                     .createdAt(comment.getCreatedAt())
                     .build();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
@@ -53,12 +53,12 @@ public class CommentServiceImpl implements CommentService {
             return CommentResDto.createCommentResDto()
                     .comment_id(comment.getCommentId())
                     .answer_id(comment.getAnswer().getAnswerId())
-                    .user_id(comment.getUser().getEmail())
+                    .user_id(comment.getUser().getUserId())
                     .content(comment.getContent())
                     .createdAt(comment.getCreatedAt())
                     .build();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
         }

@@ -7,7 +7,7 @@ import preproject.spring.comment.dto.CommentResDto;
 public interface CommentService {
 
     // 댓글 등록
-    CommentResDto createComment (CommentReqDto commentReqDto) throws Exception;
+    CommentResDto createComment(CommentReqDto commentReqDto) throws Exception;
 
     // 댓글 수정
     @Transactional
