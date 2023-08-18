@@ -1,9 +1,12 @@
 package preproject.spring.tag.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import preproject.spring.question.entity.QuestionTag;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +23,9 @@ public class Tag {
     @Column(nullable = false)
     private String tagTitle;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "tag")
-    private List<QuestionTag> questionTags;
+    private List<QuestionTag> questionTags = new ArrayList<>();
+
 
 }
