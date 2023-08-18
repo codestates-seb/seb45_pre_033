@@ -12,6 +12,5 @@ import java.util.List;
 public interface TagMapper {
     Tag tagPostDtoToTag(TagPostDto tagPostDto);
     TagResponseDto tagToTagResponseDto(Tag tag);
-    List<TagResponseDto> tagToTagResponseDtos(List<Tag> tags);
 
 }

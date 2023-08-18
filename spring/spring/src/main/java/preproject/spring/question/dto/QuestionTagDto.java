@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionTagDto {
-    private Long tagId;
+    private String tagTitle;
 }
