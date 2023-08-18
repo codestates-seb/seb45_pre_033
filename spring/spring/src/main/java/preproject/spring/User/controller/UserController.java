@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,7 +30,7 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    @GetMapping("/login/check") //이메일 검증하는곳
+    @PostMapping("/login/check") //이메일 검증하는곳
     public ResponseEntity<User> checkEmail(@RequestBody UserDto.Check email){
         //존재할 경우 409에러
         if(service.checkEmail(email.getEmail())){
@@ -52,7 +51,7 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserDto.Response> loginUser(@RequestBody UserDto.Login userlogin){
         if(service.checkEmail(userlogin.getEmail())){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

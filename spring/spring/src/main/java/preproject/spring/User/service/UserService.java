@@ -59,6 +59,8 @@ public class UserService {
         user.setPassword(encryptPassword);
 
         //초기설정
+        user.setProfile_message("hello");
+        user.setImage_url("/static/bee_happy.png");
         user.setRole(User.Role.USER);
         user.setCreatedAt(LocalDateTime.now());
 

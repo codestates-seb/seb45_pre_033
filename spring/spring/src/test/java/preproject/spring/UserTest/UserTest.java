@@ -44,18 +44,6 @@ class UserTest {
         Assertions.assertEquals(USER,user.getRole());
     }
 
-    @DisplayName("비밀번호 암호화 시도")
-    @Test
-    void postUser(){
-
-
-        UserDto.Post post = new UserDto.Post("example@gmail.com","abc123","example");
-        String encryptPassword = passwordEncoder.encode(post.getPassword());
-
-        Assertions.assertNotNull(post.getPassword());
-        Assertions.assertNotNull(encryptPassword);
-
-    }
 
 
 }

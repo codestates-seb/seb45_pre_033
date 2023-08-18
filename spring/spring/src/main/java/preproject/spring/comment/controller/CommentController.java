@@ -3,17 +3,22 @@ package preproject.spring.comment.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import preproject.spring.comment.Entity.Comment;
+import preproject.spring.comment.dto.CommentDto;
 import preproject.spring.comment.dto.CommentReqDto;
 import preproject.spring.comment.dto.CommentResDto;
+import preproject.spring.comment.mapper.CommentMapper;
 import preproject.spring.comment.service.CommentService;
 
 @RestController
 @RequestMapping("/answer/comment")
 public class CommentController {
     final CommentService commentService;
+    private final CommentMapper mapper;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, CommentMapper mapper) {
         this.commentService = commentService;
+        this.mapper = mapper;
     }
 
     // 등록
