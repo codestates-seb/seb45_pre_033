@@ -57,7 +57,7 @@ public class QuestionController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{question-id}/edit")
+    @PatchMapping("/edit/{question-id}")
     public ResponseEntity<Question> patchQuestion(@PathVariable("question-id") Long questionId,
                                         @RequestBody QuestionPatchDto questionPatchDto) {
         questionPatchDto.setQuestionId(questionId);
