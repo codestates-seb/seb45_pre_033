@@ -40,7 +40,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/login") //회원 가입 시 (email,password,nickname이 값으로 들어옴)
+    @PostMapping("/login/create") //회원 가입 시 (email,password,nickname이 값으로 들어옴)
     public ResponseEntity<User> postUser(@RequestBody UserDto.Post userpost){
         User user = service.createUser(mapper.userPostChanger(userpost));
 
@@ -50,6 +50,21 @@ public class UserController {
                 .buildAndExpand(user.getUserId())
                 .toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UserDto.Response> loginUser(@RequestBody UserDto.Login userlogin){
+        if(service.checkEmail(userlogin.getEmail())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(!service.checkPassword(userlogin.getEmail(), userlogin.getPassword())){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        User Change = service.loginUser(userlogin.getEmail());
+
+        UserDto.Response user = mapper.userResponseChanger(Change);
+
+        return ResponseEntity.ok(user);
     }
 
     @PatchMapping("/user/mypage/{user-id}") //마이페이지에서 user정보 수정 시 (주소로는 id값, email,nickname,profile message/image가 들어옴)
