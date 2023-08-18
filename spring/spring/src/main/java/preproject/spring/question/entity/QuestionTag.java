@@ -28,7 +28,7 @@ public class QuestionTag {
 
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "TAG_ID")
+    @JoinColumn(name = "TAG_TITLE")
     private Tag tag;
 
 }
