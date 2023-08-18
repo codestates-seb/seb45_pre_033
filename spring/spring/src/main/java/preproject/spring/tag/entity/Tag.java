@@ -16,11 +16,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Tag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
 
-    @Column(nullable = false)
+    @Id
+    @Column(nullable = false, unique = true)
     private String tagTitle;
 
     @JsonBackReference

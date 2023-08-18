@@ -34,7 +34,7 @@ public interface QuestionMapper  {
                 .map(questionTagDto -> {
                     QuestionTag questionTag = new QuestionTag();
                     Tag tag = new Tag();
-                    tag.setTagId(questionTagDto.getTagId());
+                    tag.setTagTitle(questionTagDto.getTagTitle());
                     questionTag.setQuestion(question);
                     questionTag.setTag(tag);
                     return questionTag;
@@ -51,7 +51,7 @@ public interface QuestionMapper  {
                 .stream()
                 .map(questionTag -> QuestionTagResponseDto
                         .builder()
-                        .tagId(questionTag.getTag().getTagId())
+//                        .tagId(questionTag.getTag().getTagId())
                         .tagTitle(questionTag.getTag().getTagTitle())
                         .build())
                 .collect(Collectors.toList());

@@ -34,7 +34,7 @@ public class QuestionService {
         question.getQuestionTags()
                         .stream()
                                 .forEach(questionTag ->
-                                        tagService.findTag(questionTag.getTag().getTagId()));
+                                        tagService.findTag(questionTag.getTag().getTagTitle()));
 
         question.setCreatedAt(LocalDateTime.now());
 
