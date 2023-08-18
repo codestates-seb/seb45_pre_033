@@ -17,7 +17,7 @@ public class CommentController {
     }
 
     // 등록
-    @PostMapping("/{answer_id}/{user_id}")
+    @PostMapping("/{answer-id}/{user-id}")
     public ResponseEntity<CommentResDto> createComment(@PathVariable(value = "answer_id") Long answer_id, @PathVariable(value = "user_id") Long userId,
                                                        @RequestBody CommentReqDto commentReqDto) throws Exception {
         try {
@@ -33,7 +33,7 @@ public class CommentController {
     }
 
     // 수정
-    @PatchMapping("/{comment_id}")
+    @PatchMapping("/{comment-id}")
     public ResponseEntity<CommentResDto> updateComment(@PathVariable(value = "comment_id") Long answer_id, @RequestBody CommentReqDto commentReqDto) throws Exception {
         try {
             commentReqDto.setAnswerId(answer_id);
@@ -48,7 +48,7 @@ public class CommentController {
     }
 
     // 삭제
-    @DeleteMapping("{comment_id}")
+    @DeleteMapping("{comment-id}")
     public ResponseEntity<Void> deleteComment(@PathVariable(value = "comment_id") Long commentId) throws Exception {
         try {
             commentService.deleteComment(commentId);
