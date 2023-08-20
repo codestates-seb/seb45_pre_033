@@ -1,5 +1,6 @@
 package preproject.spring.comment.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import preproject.spring.User.entity.User;
 import preproject.spring.answer.Entity.Answer;
@@ -19,10 +20,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Answer answer;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

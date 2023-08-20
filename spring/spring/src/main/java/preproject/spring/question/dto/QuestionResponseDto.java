@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import preproject.spring.answer.Entity.Answer;
+import preproject.spring.comment.Entity.Comment;
 import preproject.spring.question.entity.QuestionTag;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String writer;
+    private String image_url;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private List<Answer> answers;
