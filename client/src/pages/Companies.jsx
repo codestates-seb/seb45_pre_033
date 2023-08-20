@@ -2,22 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const StyleHeader = styled.div`
+const StyleHeader = styled.h1`
     font-size: 35px;
     padding: 0 20px;
 `;
 
-const H3 = styled.div`
+const HeaderContent = styled.h3`
+    font-size: 17px;
+    padding: 0px 20px;
+    margin: 5px 0px 0px 0px;
+    color: rgb(50, 50, 50, 0.7);
+`;
+
+const ListContent = styled.h6`
     font-size: 20px;
     padding: 0px 20px;
     margin: 40px 0px -34px 0px;
-`;
-
-const H6 = styled.div`
-    font-size: 17px;
-    padding: 0px 20px;
-    margin: 5px 0px 0px 3px;
-    color: rgb(50, 50, 50, 0.7);
 `;
 
 
@@ -84,8 +84,8 @@ const Companies = () => {
             <HeaderRow>
                 <div>
                     <StyleHeader>회사목록</StyleHeader>
-                    <H6>어떤 회사가 있는지 알아봅시다👋</H6>
-                    <H3>1 개의 회사</H3>
+                    <HeaderContent>어떤 회사가 있는지 알아봅시다👋</HeaderContent>
+                    <ListContent>1 개의 회사</ListContent>
                 </div>
             </HeaderRow>
             <CompaniesRow>
