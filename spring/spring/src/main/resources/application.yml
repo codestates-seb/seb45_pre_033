@@ -1,13 +1,9 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    url: jdbc:h2:mem:test
-    driver-class-name: org.h2.Driver
-    username: sa
+    url: jdbc:mysql://localhost:3306/preprojs
+    username: root
     password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: create  # (1) 스키마 자동 생성
@@ -21,3 +17,5 @@ logging:
       springframework:
         orm:
           jpa: DEBUG
+server:
+  port: 8080
