@@ -60,6 +60,7 @@ public class UserDto {
     @Getter
     @AllArgsConstructor
     public static class Response{
+        private Long userId;
 
         private String email;
 
