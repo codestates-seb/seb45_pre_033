@@ -85,7 +85,7 @@ function Footer() {
     <FooterContainer>
       <ul className="footer-container">
         <li className="foot-logo">
-          <img src="/yeongho_logo.png" alt="log" width="50px" height="50px" />
+          <img src="/sofLogo.png" alt="log" width="50px" height="50px" />
         </li>
 
         <li className="menu-container">

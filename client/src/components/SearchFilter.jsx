@@ -14,16 +14,18 @@ export default function Searchfilter () {
     const toggleArr = ['제목','작성자','태그'];
 
     const Button = styled.button`
-        background-color: white;
-        color: #43337D;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        font-weight: bold;
-        height: 30px;
-        width: 60px;
-        justify-content: center;
-        padding: 0 8px;
+      background-color: white;
+      color: #43337d;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      height: 30px;
+      width: 50px;
+      justify-content: center;
+      border: none;
+      padding-top: 4px;
     `;
 
       return (
