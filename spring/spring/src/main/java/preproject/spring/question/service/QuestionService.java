@@ -4,15 +4,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import preproject.spring.Exception.ExceptionCode;
 import preproject.spring.Exception.LogicException;
 import preproject.spring.User.entity.User;
 import preproject.spring.User.service.UserService;
+import preproject.spring.answer.Entity.Answer;
+import preproject.spring.answer.respository.AnswerRepository;
+import preproject.spring.comment.Entity.Comment;
+import preproject.spring.comment.repository.CommentRepository;
 import preproject.spring.question.entity.Question;
 import preproject.spring.question.repository.QuestionRepository;
 import preproject.spring.tag.service.TagService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,11 +27,19 @@ public class QuestionService {
     private final UserService userService;
     private final TagService tagService;
 
-    public QuestionService(QuestionRepository questionRepository, UserService userService, TagService tagService) {
+    private final AnswerRepository answerRepository;
+    private final CommentRepository commentRepository;
+
+    public QuestionService(QuestionRepository questionRepository, UserService userService, TagService tagService,
+                           AnswerRepository answerRepository,
+                           CommentRepository commentRepository) {
         this.questionRepository = questionRepository;
         this.userService = userService;
         this.tagService = tagService;
+        this.answerRepository = answerRepository;
+        this.commentRepository = commentRepository;
     }
+
 
     public Question createQuestion(Question question){
 
@@ -61,9 +75,19 @@ public class QuestionService {
         return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
+    @Transactional
     public void deleteQuestion(Long questionId) {
         Question question = findVerifiedQuestion(questionId);
 
+        List<Answer> answers = question.getAnswers();
+
+        answers.forEach(answer -> {
+            List<Comment> comments = answer.getComment();
+            commentRepository.deleteAll(comments);
+        });
+
+
+        answerRepository.deleteAll(answers);
         questionRepository.delete(question);
     }
 

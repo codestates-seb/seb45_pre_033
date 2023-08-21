@@ -58,13 +58,13 @@ public class QuestionController {
     }
 
     @PatchMapping("/edit/{question-id}")
-    public ResponseEntity<Question> patchQuestion(@PathVariable("question-id") Long questionId,
+    public ResponseEntity<QuestionResponseDto> patchQuestion(@PathVariable("question-id") Long questionId,
                                         @RequestBody QuestionPatchDto questionPatchDto) {
         questionPatchDto.setQuestionId(questionId);
         Question question =
                 questionService.updateQuestion(mapper.questionPatchDtoToQuestion(questionPatchDto));
 
-        return ResponseEntity.ok(question);
+        return ResponseEntity.ok(mapper.questionToQuestionResponseDto(question));
     }
 
     @DeleteMapping("/{question-id}")
