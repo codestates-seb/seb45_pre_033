@@ -12,6 +12,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     List<Answer> findByQuestion(Question question);
 
+    Answer findByAnswerId(Long answerId);
+
     @Query("select a from Answer a left join fetch a.comment where a.answerId = :answerId")
     Optional<Answer> findByAnswerIdWithComment(Long answerId);
 }

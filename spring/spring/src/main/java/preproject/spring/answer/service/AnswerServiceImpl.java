@@ -137,6 +137,9 @@ public class AnswerServiceImpl implements AnswerService {
     @Transactional
     public void deleteAnswer(Long answerId) throws Exception {
 
+        Answer answer = answerRepository.findByAnswerId(answerId);
+        List<Comment> comments =answer.getComment();
+        commentRepository.deleteAll(comments);
         answerRepository.deleteById(answerId);
 
     }
