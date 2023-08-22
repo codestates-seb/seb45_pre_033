@@ -1,7 +1,10 @@
 package preproject.spring.answer.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import preproject.spring.User.entity.User;
+import preproject.spring.User.repository.UserRepository;
 import preproject.spring.answer.Entity.Answer;
 import preproject.spring.answer.dto.AnswerReqDto;
 import preproject.spring.answer.dto.AnswerResDto;
@@ -11,6 +14,7 @@ import preproject.spring.comment.dto.CommentResDto;
 import preproject.spring.comment.repository.CommentRepository;
 import preproject.spring.question.entity.Question;
 
+import javax.persistence.PersistenceUnitUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +23,12 @@ import java.util.Optional;
 @Service(value = "answerService")
 public class AnswerServiceImpl implements AnswerService {
 
+    private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
 
-    public AnswerServiceImpl(AnswerRepository answerRepository, CommentRepository commentRepository) {
+    public AnswerServiceImpl(UserRepository userRepository, AnswerRepository answerRepository, CommentRepository commentRepository) {
+        this.userRepository = userRepository;
         this.answerRepository = answerRepository;
         this.commentRepository = commentRepository;
     }
@@ -34,6 +40,8 @@ public class AnswerServiceImpl implements AnswerService {
         try {
             Answer answer = answerReqDto.createAnswer();
             answerRepository.save(answer);
+
+            answer.setUser(userRepository.getReferenceById(answer.getUser().getUserId()));
 
             AnswerResDto answerResDto = new AnswerResDto();
             answerResDto.setAnswerId(answer.getAnswerId());
