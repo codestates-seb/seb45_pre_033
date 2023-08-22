@@ -60,7 +60,7 @@ public class UserService {
 
         //초기설정
         user.setProfile_message("hello");
-        user.setImage_url("/static/bee_happy.png");
+        user.setImage_url("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
         user.setRole(User.Role.USER);
         user.setCreatedAt(LocalDateTime.now());
 
