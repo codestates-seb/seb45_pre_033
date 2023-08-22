@@ -15,6 +15,7 @@ import preproject.spring.comment.Entity.Comment;
 import preproject.spring.comment.repository.CommentRepository;
 import preproject.spring.question.entity.Question;
 import preproject.spring.question.repository.QuestionRepository;
+import preproject.spring.question.repository.QuestionTagRepository;
 import preproject.spring.tag.service.TagService;
 
 import java.time.LocalDateTime;
@@ -26,18 +27,21 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserService userService;
     private final TagService tagService;
+    private final QuestionTagRepository qtagRepository;
 
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
 
     public QuestionService(QuestionRepository questionRepository, UserService userService, TagService tagService,
                            AnswerRepository answerRepository,
-                           CommentRepository commentRepository) {
+                           CommentRepository commentRepository,
+                           QuestionTagRepository qtagRepository) {
         this.questionRepository = questionRepository;
         this.userService = userService;
         this.tagService = tagService;
         this.answerRepository = answerRepository;
         this.commentRepository = commentRepository;
+        this.qtagRepository = qtagRepository;
     }
 
 
@@ -81,6 +85,8 @@ public class QuestionService {
         Question question = findVerifiedQuestion(questionId);
 
         List<Answer> answers = question.getAnswers();
+
+        qtagRepository.deleteAll(question.getQuestionTags());
 
         answers.forEach(answer -> {
             List<Comment> comments = answer.getComment();
