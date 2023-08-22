@@ -7,17 +7,12 @@ const StyleHeader = styled.h1`
     padding: 0 20px;
 `;
 
-const HeaderContent = styled.h3`
-    font-size: 17px;
-    padding: 0px 20px;
-    margin: 5px 0px 0px 0px;
-    color: rgb(50, 50, 50, 0.7);
-`;
+
 
 const ListContent = styled.h6`
     font-size: 20px;
-    padding: 0px 20px;
-    margin: 40px 0px -34px 0px;
+    padding: 0px 30px;
+    margin: 40px 0px 10px 0px;
 `;
 
 
@@ -25,22 +20,22 @@ const HeaderRow = styled.div`
     max-width: 1100px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     background-color: #ffffff;
-    padding: 20px 0;
+    padding: 30px 0;
 
 `;
 
 const CompaniesRow = styled.div`
     max-width: 1100px;
     background-color: white;
-    padding: 30px;
+    padding: 20px;
     border-top: 1px solid rgba(40, 40, 40, 0.3);
     border-bottom: 1px solid rgba(40, 40, 40, 0.3);
     display: grid;
     grid-template-columns: 100px 1fr;
     gap: 20px;
     margin-top: 20px;
+    margin-left: 20px;
 `;
 
 
@@ -63,7 +58,7 @@ const CompaniesTitle = styled.div`
         display: flex;
         gap: 10px;
     }
-    fe, be, cd {
+    span {
         background-color: #43337d;
         padding: 5px 10px;
         border-radius: 4px;
@@ -83,9 +78,8 @@ const Companies = () => {
         <main>
             <HeaderRow>
                 <div>
-                    <StyleHeader>회사목록</StyleHeader>
-                    <HeaderContent>어떤 회사가 있는지 알아봅시다👋</HeaderContent>
-                    <ListContent>1 개의 회사</ListContent>
+                    <StyleHeader>그룹목록</StyleHeader>
+                    <ListContent>1 개의 그룹</ListContent>
                 </div>
             </HeaderRow>
             <CompaniesRow>
@@ -94,9 +88,9 @@ const Companies = () => {
                     <p>영호와 아이들</p>
                     <p><a href="https://github.com/codestates-seb/seb45_pre_033" target="_blank" rel="noopener noreferrer">https://github.com/codestates-seb/seb45_pre_033</a></p>
                     <div className="additional-tags">
-                        <fe>#Frontend</fe>
-                        <be>#Backend</be>
-                        <cd>#Codestates</cd>
+                        <span>#Frontend</span>
+                        <span>#Backend</span>
+                        <span>#Codestates</span>
                     </div>
                 </CompaniesTitle>
             </CompaniesRow>

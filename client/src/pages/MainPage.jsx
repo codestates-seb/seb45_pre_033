@@ -18,14 +18,18 @@ const BodyContainer = styled.div`
 `;
 
 
-export default function MainPage() {
+export default function MainPage({setMyInfor}) {
     const [showSignUp, setShowSignUp] = useState(false);
     const handleShowSignUp = () => {
         setShowSignUp(!showSignUp)
     }
     return (
-        <BodyContainer>
-            {!showSignUp ? <Login handleShowSignUp={handleShowSignUp} /> : <SignUp handleShowSignUp={handleShowSignUp} />}
-        </BodyContainer>
-    )
+      <BodyContainer>
+        {!showSignUp ? (
+          <Login handleShowSignUp={handleShowSignUp} setMyInfor={setMyInfor} />
+        ) : (
+          <SignUp handleShowSignUp={handleShowSignUp} />
+        )}
+      </BodyContainer>
+    );
 }

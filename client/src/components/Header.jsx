@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from "styled-components";
 import Searchfilter from "./SearchFilter";
-
+import { Link } from 'react-router-dom';
 const Container = styled.header`
-  position: fixed;
   z-index: 1;
   width: 100%;
-  min-width: auto;
+  min-width: 1280px;
   height: 56px;
   display: flex;
   align-items: center;
   background-color: #43337D;
   border-bottom: 1px solid lightgray;
   justify-content: center;
+  position: fixed;
 `;
 
 const HeaderContainer = styled.div`
@@ -21,19 +21,22 @@ const HeaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 3px;
 `
 
 const Button = styled.button`
-    background-color: white;
-    color: #43337D;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    height: 30px;
-    width: 85px;
-    justify-content: center;
-    padding: 0 4px;
+  background-color: white;
+  color: #43337d;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  width: 85px;
+  justify-content: center;
+  border: none;
+  padding-top: 4px;
 `;
 
 const LogoutButton = styled(Button)`
@@ -52,7 +55,7 @@ const ImageContainer = styled.div`
     width: 30px;
     height: 30px;
     display: flex;
-    padding: 0 8px;
+    margin: 0 2px;
     img {
         width: 100%;
         height: 100%;
@@ -60,7 +63,9 @@ const ImageContainer = styled.div`
         border-radius: 10px;
     }
 `;
-
+const CustomLink = styled(Link)`
+    text-decoration: none;
+`
 const SearchContainer = styled.form`
     display: flex;
     align-items: center;
@@ -68,30 +73,36 @@ const SearchContainer = styled.form`
     flex-grow: 1;
     box-sizing: border-box;
     background-color: white;
-    padding: 0 8px;
+    padding: 0 10px;
+    padding-top: 4px;
     border-radius: 5px;
     height: 30px;
-    border: 1px solid ;
+    border: none ;
     input {
     flex-grow: 1;
     background-color: transparent;
     border: none;
     outline: none;
+    font-size: 16px;
+    font-weight: bold;
   }
 `;
-export default function Header () {
+export default function Header({ setMyInfor }) {
+    const handleLogOut = () => {
+        setMyInfor(false)
+    }
     return (
         <Container>
             <HeaderContainer>
-                <LogoContainer><img src="/SOicon.svg"/>Yeongho overflow</LogoContainer>
+                <LogoContainer><img src="/SOicon.svg" alt='logo'/>Yeongho overflow</LogoContainer>
                 <Searchfilter/>
                 <SearchContainer>
-                    <img src="/search.svg"/>
+                    <img src="/search.svg" alt='searchIcon'/>
                     <input type="text" placeholder="검색..."/>
                 </SearchContainer>
-                <ImageContainer><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" /></ImageContainer>
-                <Button>마이페이지</Button>
-                <LogoutButton>로그아웃</LogoutButton>
+                <ImageContainer><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt='profile'/></ImageContainer>
+                <CustomLink to={'/mypage'}><Button>마이페이지</Button></CustomLink>
+                <LogoutButton onClick={handleLogOut}>로그아웃</LogoutButton>
             </HeaderContainer>
         </Container>
     );
