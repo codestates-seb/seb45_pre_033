@@ -29,9 +29,14 @@ public class TagService {
         this.qtagRepository = qtagRepository;
     }
 
+    @Transactional
     public Tag createTag(Tag tag){
+        String tagtitle = tag.getTagTitle();
+        if (tagRepository.findByTagTitle(tagtitle)==null){
+            return tagRepository.save(tag);
 
-        return tagRepository.save(tag);
+        }else return tag;
+
     }
 
     public Page<Tag> findTags(int page, int size) {
@@ -39,11 +44,13 @@ public class TagService {
                 Sort.by("tagId").descending()));
     }
 
-    @Transactional
+//    @Transactional
     public void deleteTag(String tagTitle) {
+
         Tag findTag = findVerifiedTagByTitle(tagTitle);
-        qtagRepository.delete((qtagRepository.findQuestionTagByTagTagTitle(findTag.getTagTitle())));
-        tagRepository.delete(findTag);
+        if ((qtagRepository.findQuestionTagByTagTagTitle(findTag.getTagTitle()))==null){
+            tagRepository.delete(findTag);
+        }
     }
 
     public Tag findTag(String tagTitle) {
