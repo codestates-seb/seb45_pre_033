@@ -102,6 +102,7 @@ public class QuestionService {
     private void verifyQuestion(Question question){
         User findUser = userService.findUser(question.getUser().getUserId());
         question.setWriter(findUser.getNickname());
+        question.setEmail(findUser.getEmail());
     }
 
 

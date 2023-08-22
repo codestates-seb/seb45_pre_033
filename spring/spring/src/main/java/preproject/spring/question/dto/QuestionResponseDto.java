@@ -19,6 +19,7 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String writer;
+    private String email;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private List<AnswerQResDto> answers;

@@ -30,6 +30,8 @@ public class Question {
 
     private String writer;
 
+    private String email;
+
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

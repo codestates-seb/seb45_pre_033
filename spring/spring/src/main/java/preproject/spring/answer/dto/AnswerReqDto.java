@@ -16,6 +16,9 @@ public class AnswerReqDto {
     private Long answerId;
     private Long questionId;
     private Long userId;
+    private String email;
+    private String image_url;
+    private String writer;
 
     public Answer createAnswer() {
         Question question = new Question();
@@ -23,6 +26,9 @@ public class AnswerReqDto {
 
         User user = new User();
         user.setUserId(this.userId);
+        user.setEmail(this.email);
+        user.setImage_url(this.image_url);
+        user.setNickname(this.writer);
 
         return Answer.createAnswer()
                 .question(question)
