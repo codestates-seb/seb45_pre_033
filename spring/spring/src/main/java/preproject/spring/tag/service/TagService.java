@@ -39,10 +39,10 @@ public class TagService {
                 Sort.by("tagId").descending()));
     }
 
-    @Transactional
+//    @Transactional
     public void deleteTag(String tagTitle) {
         Tag findTag = findVerifiedTagByTitle(tagTitle);
-        qtagRepository.delete((qtagRepository.findQuestionTagByTagTagTitle(findTag.getTagTitle())));
+//        qtagRepository.delete((qtagRepository.findQuestionTagByTagTagTitle(findTag.getTagTitle())));
         tagRepository.delete(findTag);
     }
 
