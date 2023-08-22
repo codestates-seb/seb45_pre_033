@@ -30,6 +30,7 @@ public class CommentServiceImpl implements CommentService {
                     .comment_id(comment.getCommentId())
                     .answer_id(comment.getAnswer().getAnswerId())
                     .user_id(comment.getUser().getUserId())
+                    .writer(comment.getUser().getNickname())
                     .content(comment.getContent())
                     .createdAt(comment.getCreatedAt())
                     .build();
@@ -54,6 +55,7 @@ public class CommentServiceImpl implements CommentService {
                     .comment_id(comment.getCommentId())
                     .answer_id(comment.getAnswer().getAnswerId())
                     .user_id(comment.getUser().getUserId())
+                    .writer(comment.getUser().getNickname())
                     .content(comment.getContent())
                     .createdAt(comment.getCreatedAt())
                     .build();
