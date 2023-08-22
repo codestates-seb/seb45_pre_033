@@ -45,8 +45,9 @@ export default function ReplySubmit({ handleSubmitOn, myInfor, answer, setQuesti
   const handleReplyText = (event) => {
     setReplyText(event.target.value);
   };
+
   const handleReplySubmit = () => {
-    axios.post(`/answer/comment/${answer.answerId}/${myInfor.userId}`).then((res) => {
+    axios.post(`/answer/comment/${answer.answerId}/${myInfor.userId}`,{"content":replyText}).then((res) => {
       axios
         .get(`/question/${id}`)
         .then((res) => {
@@ -63,7 +64,7 @@ export default function ReplySubmit({ handleSubmitOn, myInfor, answer, setQuesti
       <ReplyInput value={replyText} onChange={handleReplyText} />
       <ButtonContainer>
         <ReplyButton onClick={handleSubmitOn}>취소</ReplyButton>
-        <ReplyButton onClick={() => handleReplySubmit}>완료</ReplyButton>
+        <ReplyButton onClick={handleReplySubmit}>완료</ReplyButton>
       </ButtonContainer>
     </SubmitContainer>
   );
