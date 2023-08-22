@@ -21,13 +21,13 @@ public class AnswerController {
     }
 
     // 답변 등록
-    @PostMapping("/{question_id}")
-    public ResponseEntity<AnswerResDto> createAnswer(@PathVariable(value = "question_id") Long questionId,
+    @PostMapping("/{question-id}/{user-id}")
+    public ResponseEntity<AnswerResDto> createAnswer(@PathVariable(value = "question-id") Long questionId, @PathVariable(value = "user-id") Long userId,
                                                      @RequestBody AnswerReqDto answerReqDto) throws Exception {
         try {
 
-            answerReqDto.setQuestionId(questionId); // 질문 아이디
-            answerReqDto.setUserId(1L); // 작성자 아이디 (나중에 수정하기) test 할 때 사용함
+            answerReqDto.setQuestionId(questionId);
+            answerReqDto.setUserId(userId);
 
             AnswerResDto answerResDto = answerService.createAnswer(answerReqDto);
 
@@ -40,8 +40,8 @@ public class AnswerController {
     }
 
     // 답변 전체 조회
-    @GetMapping("/{question_id}")
-    public ResponseEntity<List<AnswerResDto>> getAllAnswers(@PathVariable(value = "question_id") Long questionId) throws Exception {
+    @GetMapping("/{question-id}")
+    public ResponseEntity<List<AnswerResDto>> getAllAnswers(@PathVariable(value = "question-id") Long questionId) throws Exception {
         try {
             List<AnswerResDto> answerResDtoList = answerService.getAllAnswer(questionId);
 
@@ -54,8 +54,8 @@ public class AnswerController {
     }
 
     // 답변 수정
-    @PatchMapping("/{answer_id}")
-    public ResponseEntity<AnswerResDto> updateAnswers(@PathVariable(value="answer_id") Long answerId, @RequestBody AnswerReqDto answerReqDto) throws Exception {
+    @PatchMapping("/{answer-id}")
+    public ResponseEntity<AnswerResDto> updateAnswers(@PathVariable(value="answer-id") Long answerId, @RequestBody AnswerReqDto answerReqDto) throws Exception {
         try{
             answerReqDto.setAnswerId(answerId);
 
@@ -70,8 +70,8 @@ public class AnswerController {
     }
 
     // 답변 삭제
-    @DeleteMapping("/{answer_id}")
-    public ResponseEntity<Void> deleteAnswers(@PathVariable(value="answer_id") Long answerId) throws Exception {
+    @DeleteMapping("/{answer-id}")
+    public ResponseEntity<Void> deleteAnswers(@PathVariable(value="answer-id") Long answerId) throws Exception {
 
         try {
             answerService.deleteAnswer(answerId);

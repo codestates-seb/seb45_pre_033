@@ -2,6 +2,7 @@ package preproject.spring.User.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import preproject.spring.question.dto.QuestionResponseDto;
 import preproject.spring.question.entity.Question;
 
 import java.time.LocalDateTime;
@@ -59,6 +60,7 @@ public class UserDto {
     @Getter
     @AllArgsConstructor
     public static class Response{
+        private Long userId;
 
         private String email;
 
@@ -70,9 +72,7 @@ public class UserDto {
 
         private LocalDateTime createdAt;
 
-        private LocalDateTime modifiedAt;
-
-        private List<Question> questions;
+        private List<QuestionResponseDto> questions;
     }
 
 
