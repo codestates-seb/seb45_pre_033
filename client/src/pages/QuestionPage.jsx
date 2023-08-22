@@ -161,6 +161,7 @@ export default function QuestionPage({myInfor}) {
       axios.get(`/question/${id}`)
         .then(res => {
       setQuestionInfo(res.data)
+      setQuestionInput('')
       }).catch(err => {
       console.log(err)
     })
@@ -216,7 +217,7 @@ export default function QuestionPage({myInfor}) {
           <AnswerSubmitContainer>
             <AnswerSubmitTitle>답변 입력하기</AnswerSubmitTitle>
             <AnswerInput value={questionInput} onChange={handleInput} />
-            <QuestionButton onClick={() => handleAnswerSubmit}>
+            <QuestionButton onClick={handleAnswerSubmit}>
               답변 작성 완료
             </QuestionButton>
           </AnswerSubmitContainer>

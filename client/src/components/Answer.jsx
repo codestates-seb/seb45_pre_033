@@ -53,7 +53,7 @@ export default function Answer({ answer, isSameDay, myInfor, setQuestionInfo, id
   const handleSubmitOn = () => {
     setSubmitOn(!submitOn);
   };
-
+  
   return (
     <AnswerContainer>
       <ContentContainer>{answer.content}</ContentContainer>
