@@ -57,6 +57,7 @@ public class QuestionService {
 
     public Question updateQuestion(Question question){
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
+        verifyQuestion(findQuestion);
         Optional.ofNullable(question.getTitle())
                         .ifPresent(title -> findQuestion.setTitle(title));
         Optional.ofNullable(question.getContent())
@@ -103,6 +104,7 @@ public class QuestionService {
         User findUser = userService.findUser(question.getUser().getUserId());
         question.setWriter(findUser.getNickname());
         question.setEmail(findUser.getEmail());
+        question.setImage_url(findUser.getImage_url());
     }
 
 
