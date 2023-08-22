@@ -149,6 +149,7 @@ export default function SignUp({ handleShowSignUp }) {
         axios.post('/login/check', requestData)
             .then(res => {
             setEmailChecked(true)
+            console.log('Check')
             }).catch(err => {
             setEmailAlert(3)
         })

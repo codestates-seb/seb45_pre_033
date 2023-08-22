@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Footerlogo from "/Users/leesaeda/Desktop/pre-project/seb45_pre_033/client/src/img/yeongho_logo.png";
 
 const FooterContainer = styled.footer`
   width: 100vw;
@@ -8,7 +7,6 @@ const FooterContainer = styled.footer`
   color: white;
   padding: 10px 0 0;
   display: flex;
-  position: fixed;
   bottom: 0;
   ul,
   li {
@@ -87,7 +85,7 @@ function Footer() {
     <FooterContainer>
       <ul className="footer-container">
         <li className="foot-logo">
-          <img src={Footerlogo} alt="log" width="50px" height="50px" />
+          <img src="/sofLogo.png" alt="log" width="50px" height="50px" />
         </li>
 
         <li className="menu-container">

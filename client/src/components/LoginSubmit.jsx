@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const InputLabel = styled.label`
     font-size: 24px;
@@ -64,10 +65,11 @@ const Alert = styled.div`
     text-align: center;
     width: 250px;
 `
-export default function LoginSubmit({ handleShowSignUp }) {
+export default function LoginSubmit({ handleShowSignUp, setMyInfor }) {
+  const navigate = useNavigate()
   const [emailPassword, setEmailPassword] = useState({
-    "email": "",
-    "password": "",
+    email: "",
+    password: "",
   });
   const [alert1, setAlert1] = useState(false);
   const [alert2, setAlert2] = useState(false);
@@ -79,27 +81,29 @@ export default function LoginSubmit({ handleShowSignUp }) {
     }));
   };
   useEffect(() => {
-    setAlert1(false)
-    setAlert2(false)
-  },[emailPassword])
+    setAlert1(false);
+    setAlert2(false);
+  }, [emailPassword]);
   const handleLogin = () => {
-    axios.post("/login", emailPassword)
-      .then(res => {
-        console.log("success")
-        console.log(res.data)
-      }).catch(err => {
+    axios
+      .post("/login", emailPassword)
+      .then((res) => {
+        setMyInfor(res.data);
+        navigate('/question')
+      })
+      .catch((err) => {
         if (err.response.status === 404) {
-        setAlert1(true)
+          setAlert1(true);
           if (alert2) {
-          setAlert2(false)
-        }
-        }else if(err.response.status===409){
-          setAlert2(true)
-          if (alert1) {
-            setAlert1(false)
+            setAlert2(false);
           }
-      }
-    })
+        } else if (err.response.status === 409) {
+          setAlert2(true);
+          if (alert1) {
+            setAlert1(false);
+          }
+        }
+      });
   };
 
   return (
