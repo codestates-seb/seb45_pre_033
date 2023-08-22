@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from "styled-components";
 
-export default function Searchfilter () {
-    const [toggleState, setToggleState] = useState(0);
+export default function Searchfilter ({ toggleState, setToggleState }) {
     
     const handleToggle = () => {
         setToggleState((prevState) => (prevState + 1));
