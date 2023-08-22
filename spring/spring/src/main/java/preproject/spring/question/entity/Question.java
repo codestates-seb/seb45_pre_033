@@ -32,6 +32,8 @@ public class Question {
 
     private String email;
 
+    private String image_url;
+
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
