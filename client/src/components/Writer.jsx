@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const UserContainer = styled.div`
@@ -34,21 +34,27 @@ const UserName = styled.div`
 `;
 const UserEmail = styled.div`
   color: ${(props) => (props.answer ? "#5a59a4" : "white")};
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 600;
   width: 130px;
   text-align: center;
 `;
-export default function Writer({answer}) {
+export default function Writer({ answer, writer, email, url }) {
+  const [devideEmail, setDevideEmail] = useState("")
+  const [devideAdress, setDevideAdress] = useState("");
+  useEffect(() => {
+    if (email) {
+      const [devideEmail, devideAdress] = email.split("@");
+      setDevideEmail(devideEmail);
+      setDevideAdress(devideAdress);
+    }
+  },[email])
   return (
     <UserContainer answer={answer}>
-      <UserImg
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-        alt="writerImg"
-      />
+      <UserImg src={`${url}`} alt="writerImg" />
       <UserTextContainer>
-        <UserName answer={answer}>username</UserName>
-        <UserEmail answer={answer}>{"user@ email.com "}</UserEmail>
+        <UserName answer={answer}>{writer}</UserName>
+        <UserEmail answer={answer}> {`${devideEmail}@ ${devideAdress}`}</UserEmail>
       </UserTextContainer>
     </UserContainer>
   );

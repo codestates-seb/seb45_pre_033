@@ -56,7 +56,7 @@ export default function Sidebar () {
   return (
     <SidebarContainer>
        <ListContainer>
-          <StyledNavLink to='/' activeClassName ='active'>
+          <StyledNavLink to='/question' activeClassName ='active'>
             <List>질문</List>
           </StyledNavLink>
           <StyledNavLink to='/users' activeClassName ='active'>

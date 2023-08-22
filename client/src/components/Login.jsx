@@ -37,20 +37,34 @@ const Button = styled.button`
   }
 `;
 
-export default function Login({ handleShowSignUp }) {
+export default function Login({ handleShowSignUp, setMyInfor }) {
   const title = "Yeongho overflow";
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(false);
   const handleShowLogin = () => {
-    setShowLogin(!showLogin)
-  }
+    setShowLogin(!showLogin);
+  };
   useEffect(() => {
     setShowLogin(false);
-  },[])
+  }, []);
 
-    return (
-        <Container>
-          <Title><Icon src="../sofLogo.png" />{title}</Title>
-        {showLogin ? <LoginSubmit handleShowSignUp={handleShowSignUp} /> : <LoginButtons Button={Button} handleShowLogin={handleShowLogin} handleShowSignUp={handleShowSignUp} />}
-        </Container>
-    )
+  return (
+    <Container>
+      <Title>
+        <Icon src="../sofLogo.png" />
+        {title}
+      </Title>
+      {showLogin ? (
+        <LoginSubmit
+          handleShowSignUp={handleShowSignUp}
+          setMyInfor={setMyInfor}
+        />
+      ) : (
+        <LoginButtons
+          Button={Button}
+          handleShowLogin={handleShowLogin}
+          handleShowSignUp={handleShowSignUp}
+        />
+      )}
+    </Container>
+  );
 }

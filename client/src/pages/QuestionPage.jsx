@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 import Writer from "../components/Writer";
 import Answer from "../components/Answer";
+import { useParams,useNavigate } from "react-router";
+import axios from "axios";
 
 const QuestionBody = styled.div`
     width: 1120px;
@@ -11,7 +13,6 @@ const QuestionBody = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 56px;
     min-height: 800px;
 `
 const TitleContainer=styled.div`
@@ -25,7 +26,7 @@ const QuestionTitle = styled.h1`
     flex-grow: 1 0 0;
 `
 
-const AskButton = styled.button`
+const QuestionButton = styled.button`
   width: 105px;
   height: 40px;
   border-radius: 5px;
@@ -34,6 +35,7 @@ const AskButton = styled.button`
   color: white;
   font-size: 16px;
   font-weight: bold;
+  margin-left: 20px;
 `;
 const AtContainer = styled.div`
     width: 1096px;
@@ -92,45 +94,136 @@ const AnswerTitle = styled.h2`
   font-weight: bold;
   width: 1096px;
   height: 50px;
-  border-bottom: 1px solid lightgray;
-  margin-bottom: 50px;
   padding-left: 20px;
+  margin: 30px 0;
+  border-bottom: 1px lightgray solid;
+`
+const AnswerSubmitTitle = styled(AnswerTitle)`
+  border-bottom: none;
+  margin-bottom: 10px;
+  padding-left: 30px;
 `
 const AnswerSubmitContainer = styled.div`
   width: 1096px;
   margin: 10px 0;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 `
-export default function QuestionPage() {
-    const content="I have made a new dummy sheet. I have included the expected result and the current result with my current code. I have tried with my best ability to try and code this, but it ultimately isn't working well for me. Basically, I need the blank Trans with quantities to be added to the one Trans. Same with price and discount. This is an extension of my previous question, so if you need some clarification, please check that as well. Let me know if you need some more info or help. If you are able to help, thank you so much. Any help/advice is greatly appreciated! Thank you so much for your effort and help! Let me know if anything else is needed."
-    const tags=["javascript","function","variable"]
-    return (
-      <QuestionBody>
-        <TitleContainer>
-          <QuestionTitle>이 곳은 질문의 제목이 들어갈 곳입니다.</QuestionTitle>
-          <AskButton>질문하기</AskButton>
-        </TitleContainer>
-        <AtContainer>
-          8월 20일 <AtTextSpan>작성됨</AtTextSpan> 8월 20일{" "}
-          <AtTextSpan>수정됨</AtTextSpan>
-        </AtContainer>
-        <ContentContainer>{content}</ContentContainer>
-        <TagContainer>
-          {tags.map((el,idx) => (
-            <Tag key={idx}>{el}</Tag>
-          ))}
-        </TagContainer>
-        <WriterContainer>
-          <WriterDeco>질문자</WriterDeco>
-          <Writer />
-        </WriterContainer>
-        <AnswerContainer>
-          <AnswerTitle>1 개의 답변</AnswerTitle>
-          <Answer content={content} />
-        </AnswerContainer>
-        <AnswerSubmitContainer>
-          <AnswerTitle>답변 입력하기</AnswerTitle>
-        </AnswerSubmitContainer>
-      </QuestionBody>
-    );
+const AnswerInput = styled.textarea`
+  width: 1050px;
+  height: 200px;
+  margin-left: 20px;
+  border-radius: 5px;
+  border: 1px lightgray solid;
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  resize: none;
+`
+export default function QuestionPage({myInfor}) {
+  const { id } = useParams();
+  const navigate=useNavigate()
+  const [questionInfo, setQuestionInfo] = useState(false)
+  const [questionInput,setQuestionInput]= useState('')
+  useEffect(() => {
+      axios.get(`/question/${id}`)
+        .then(res => {
+      setQuestionInfo(res.data)
+      console.log(res.data)
+      }).catch(err => {
+      console.log(err)
+    })
+  }, [])
+  const handleInput = (event) => {
+    setQuestionInput(event.target.value);
+  };
+  const isSameDay = function (day) {
+    let today = new Date();
+    let createdDay = new Date(day);
+    if (
+      today.getFullYear() === createdDay.getFullYear() &&
+      today.getMonth() === createdDay.getMonth() &&
+      today.getDate() === createdDay.getDate()
+    ) {
+      return createdDay.toLocaleTimeString();
+    } else if (today.getFullYear() === createdDay.getFullYear()) {
+      return `${createdDay.getMonth() + 1}월 ${createdDay.getDate()}일`;
+    } else {
+      return `${createdDay.getFullYear()}년 ${
+        createdDay.getMonth() + 1
+      }월 ${createdDay.getDate()}일`;
+    }
+  };
+  const handleAnswerSubmit = () => {
+    axios.post(`/answer/${questionInfo.questionId}/${myInfor.userId}`, { "content": questionInput })
+    .then(res => {
+      axios.get(`/question/${id}`)
+        .then(res => {
+      setQuestionInfo(res.data)
+      }).catch(err => {
+      console.log(err)
+    })
+    }).catch(err=>console.log(err))
+  }
+    
+  return (
+    <>
+      {questionInfo ? (
+        <QuestionBody>
+          <TitleContainer>
+            <QuestionTitle>{questionInfo.title}</QuestionTitle>
+            <QuestionButton onClick={() => navigate("/questionsubmit")}>
+              질문하기
+            </QuestionButton>
+          </TitleContainer>
+          <AtContainer>
+            {isSameDay(questionInfo.createdAt)} <AtTextSpan>작성됨 </AtTextSpan>
+            {isSameDay(questionInfo.modifiedAt)}
+            <AtTextSpan>수정됨 </AtTextSpan>
+          </AtContainer>
+          <ContentContainer>{questionInfo.content}</ContentContainer>
+          <TagContainer>
+            {questionInfo.questionTags.map((el, idx) => (
+              <Tag key={idx}>{el.tag.tagTitle}</Tag>
+            ))}
+          </TagContainer>
+          <WriterContainer>
+            <WriterDeco>질문자</WriterDeco>
+            <Writer
+              writer={questionInfo.writer}
+              email={questionInfo.email}
+              url={questionInfo.image_url}
+            />
+          </WriterContainer>
+          <AnswerContainer>
+            <AnswerTitle>{questionInfo.answers.length} 개의 답변</AnswerTitle>
+            {questionInfo.answers.length > 0 ? (
+              questionInfo.answers.map((el, idx) => (
+                <Answer
+                  myInfor={myInfor}
+                  key={idx}
+                  answer={el}
+                  isSameDay={isSameDay}
+                  setQuestionInfo={setQuestionInfo}
+                  id={id}
+                />
+              ))
+            ) : (
+              <></>
+            )}
+          </AnswerContainer>
+          <AnswerSubmitContainer>
+            <AnswerSubmitTitle>답변 입력하기</AnswerSubmitTitle>
+            <AnswerInput value={questionInput} onChange={handleInput} />
+            <QuestionButton onClick={() => handleAnswerSubmit}>
+              답변 작성 완료
+            </QuestionButton>
+          </AnswerSubmitContainer>
+        </QuestionBody>
+      ) : (
+        <></>
+      )}
+    </>
+  );
 }

@@ -21,11 +21,12 @@ const ReplyAt = styled.span`
   font-size:12px;
 `;
 
-export default function Reply({content}) {
-    return (
-      <ReplyBody>
-            <ReplyContent>{content}</ReplyContent>
-            <ReplyName>Username</ReplyName><ReplyAt>-8월20일 작성됨</ReplyAt>
-      </ReplyBody>
-    );
+export default function Reply({ reply, isSameDay }) {
+  return (
+    <ReplyBody>
+      <ReplyContent>{reply.content}</ReplyContent>
+      <ReplyName>{reply.writer}</ReplyName>
+      <ReplyAt>-{isSameDay(reply.createdAt)} 작성됨</ReplyAt>
+    </ReplyBody>
+  );
 }

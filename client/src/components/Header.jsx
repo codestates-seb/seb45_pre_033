@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import Searchfilter from "./SearchFilter";
-
+import { Link } from 'react-router-dom';
 const Container = styled.header`
   z-index: 1;
   width: 100%;
@@ -25,18 +25,18 @@ const HeaderContainer = styled.div`
 `
 
 const Button = styled.button`
-    background-color: white;
-    color: #43337D;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    height: 30px;
-    width: 85px;
-    justify-content: center;
-    border: none;
-    padding-top: 4px;
+  background-color: white;
+  color: #43337d;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  width: 85px;
+  justify-content: center;
+  border: none;
+  padding-top: 4px;
 `;
 
 const LogoutButton = styled(Button)`
@@ -63,7 +63,9 @@ const ImageContainer = styled.div`
         border-radius: 10px;
     }
 `;
-
+const CustomLink = styled(Link)`
+    text-decoration: none;
+`
 const SearchContainer = styled.form`
     display: flex;
     align-items: center;
@@ -85,7 +87,10 @@ const SearchContainer = styled.form`
     font-weight: bold;
   }
 `;
-export default function Header () {
+export default function Header({ setMyInfor }) {
+    const handleLogOut = () => {
+        setMyInfor(false)
+    }
     return (
         <Container>
             <HeaderContainer>
@@ -96,8 +101,8 @@ export default function Header () {
                     <input type="text" placeholder="검색..."/>
                 </SearchContainer>
                 <ImageContainer><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt='profile'/></ImageContainer>
-                <Button>마이페이지</Button>
-                <LogoutButton>로그아웃</LogoutButton>
+                <CustomLink to={'/mypage'}><Button>마이페이지</Button></CustomLink>
+                <LogoutButton onClick={handleLogOut}>로그아웃</LogoutButton>
             </HeaderContainer>
         </Container>
     );

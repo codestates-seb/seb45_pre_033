@@ -48,25 +48,45 @@ const AddReplyButton = styled.button`
     }
 `
 
-export default function Answer({ content }) {
+export default function Answer({ answer, isSameDay, myInfor, setQuestionInfo, id }) {
+  const [submitOn, setSubmitOn] = useState(false);
+  const handleSubmitOn = () => {
+    setSubmitOn(!submitOn);
+  };
 
-    const [submitOn, setSubmitOn] = useState(false)
-    const handleSubmitOn = () => {
-        setSubmitOn(!submitOn)
-    }
-
-    return (
-        <AnswerContainer>
-            <ContentContainer>{content}</ContentContainer>
-            <WriterContainer>
-                <WriterDeco>8월 20일 작성됨</WriterDeco>
-                <Writer answer={1}/>
-            </WriterContainer>
-            <ReplyContainer>
-                <Reply content={content} />
-                <AddReplyButton onClick={handleSubmitOn}>댓글 남기기</AddReplyButton>
-                {submitOn?<ReplySubmit/>:<></>}
-            </ReplyContainer>
-        </AnswerContainer>
-    )
+  return (
+    <AnswerContainer>
+      <ContentContainer>{answer.content}</ContentContainer>
+      <WriterContainer>
+        <WriterDeco>{isSameDay(answer.createdAt)} 작성됨</WriterDeco>
+        <Writer
+          answer={1}
+          writer={answer.writer}
+          email={answer.email}
+          url={answer.image_url}
+        />
+      </WriterContainer>
+      <ReplyContainer>
+        {answer.comment.length > 0 ? (
+          answer.comment.map((el, idx) => (
+            <Reply key={idx} reply={el} isSameDay={isSameDay} />
+          ))
+        ) : (
+          <></>
+        )}
+        <AddReplyButton onClick={handleSubmitOn}>댓글 남기기</AddReplyButton>
+        {submitOn ? (
+          <ReplySubmit
+            handleSubmitOn={handleSubmitOn}
+            myInfor={myInfor}
+            answer={answer}
+            setQuestionInfo={setQuestionInfo}
+            id={id}
+          />
+        ) : (
+          <></>
+        )}
+      </ReplyContainer>
+    </AnswerContainer>
+  );
 }
