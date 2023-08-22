@@ -17,6 +17,9 @@ public class AnswerResDto {
     private Long questionId;
     private String content;
     private Long userId;
+    private String image_url;
+    private String email;
+    private String writer;
     private LocalDateTime createdAt;
     private List<CommentResDto> comment;
 

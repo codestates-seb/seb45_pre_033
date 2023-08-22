@@ -15,6 +15,7 @@ public class CommentReqDto {
     private String content;
     private Long answerId;
     private Long userId;
+    private String writer;
 
     public Comment createComment() {
         Answer answer = new Answer();
@@ -22,6 +23,7 @@ public class CommentReqDto {
 
         User user = new User();
         user.setUserId(this.userId);
+        user.setNickname(this.writer);
 
         return Comment.createComment()
                 .answer(answer)

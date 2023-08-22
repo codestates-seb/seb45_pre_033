@@ -40,6 +40,9 @@ public class AnswerServiceImpl implements AnswerService {
             answerResDto.setContent(answer.getContent());
             answerResDto.setQuestionId(answer.getQuestion().getQuestionId());
             answerResDto.setUserId(answer.getUser().getUserId());
+            answerResDto.setImage_url(answer.getUser().getImage_url());
+            answerResDto.setWriter(answer.getUser().getNickname());
+            answerResDto.setEmail(answer.getUser().getEmail());
             answerResDto.setCreatedAt(answer.getCreatedAt());
             answerResDto.setComment(new ArrayList<>());
 
@@ -73,6 +76,7 @@ public class AnswerServiceImpl implements AnswerService {
                 commentResDtoTmp.setComment_id(comment.getCommentId());
                 commentResDtoTmp.setContent(comment.getContent());
                 commentResDtoTmp.setUser_id(comment.getUser().getUserId());
+                commentResDtoTmp.setWriter(comment.getUser().getNickname());
                 commentResDtoTmp.setCreatedAt(comment.getCreatedAt());
 
                 commentResDtoList.add(commentResDtoTmp);
@@ -84,6 +88,9 @@ public class AnswerServiceImpl implements AnswerService {
             answerResDto.setContent(answer.getContent());
             answerResDto.setQuestionId(answer.getQuestion().getQuestionId());
             answerResDto.setUserId(answer.getUser().getUserId());
+            answerResDto.setImage_url(answer.getUser().getImage_url());
+            answerResDto.setWriter(answer.getUser().getNickname());
+            answerResDto.setEmail(answer.getUser().getEmail());
             answerResDto.setCreatedAt(answer.getCreatedAt());
             answerResDto.setComment(commentResDtoList);
 
@@ -112,6 +119,7 @@ public class AnswerServiceImpl implements AnswerService {
                 commentResDtoTmp.setComment_id(comment.getCommentId());
                 commentResDtoTmp.setContent(comment.getContent());
                 commentResDtoTmp.setUser_id(comment.getUser().getUserId());
+                commentResDtoTmp.setWriter(comment.getUser().getNickname());
                 commentResDtoTmp.setCreatedAt(comment.getCreatedAt());
 
                 commentResDtoList.add(commentResDtoTmp);
@@ -122,6 +130,9 @@ public class AnswerServiceImpl implements AnswerService {
             answerResDto.setContent(answer.getContent());
             answerResDto.setQuestionId(answer.getQuestion().getQuestionId());
             answerResDto.setUserId(answer.getUser().getUserId());
+            answerResDto.setImage_url(answer.getUser().getImage_url());
+            answerResDto.setWriter(answer.getUser().getNickname());
+            answerResDto.setEmail(answer.getUser().getEmail());
             answerResDto.setCreatedAt(answer.getCreatedAt());
             answerResDto.setComment(commentResDtoList);
 
