@@ -53,8 +53,8 @@ const QustionListContainer = styled.div`
   flex-direction: column;
 `;
 
-export default function QuestionsListPage() {
-  const [questions, setQuestions] = useState([]);
+export default function QuestionsListPage({questions, setQuestions}) {
+  
     const navigate=useNavigate()
   useEffect(() => {
     axios
