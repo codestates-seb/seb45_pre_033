@@ -2,20 +2,22 @@ package preproject.spring.comment.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import preproject.spring.User.repository.UserRepository;
 import preproject.spring.comment.Entity.Comment;
 import preproject.spring.comment.dto.CommentReqDto;
 import preproject.spring.comment.dto.CommentResDto;
 import preproject.spring.comment.repository.CommentRepository;
-import preproject.spring.comment.service.CommentService;
 
 import java.util.Optional;
 
 @Service(value = "commentService")
 public class CommentServiceImpl implements CommentService {
 
+    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(UserRepository userRepository, CommentRepository commentRepository) {
+        this.userRepository = userRepository;
         this.commentRepository = commentRepository;
     }
 
@@ -25,6 +27,8 @@ public class CommentServiceImpl implements CommentService {
         try {
             Comment comment = commentReqDto.createComment();
             commentRepository.save(comment);
+
+            comment.setUser(userRepository.getReferenceById(comment.getUser().getUserId()));
 
             return CommentResDto.createCommentResDto()
                     .comment_id(comment.getCommentId())
