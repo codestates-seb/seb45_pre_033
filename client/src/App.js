@@ -31,16 +31,25 @@ const Container = styled.div`
 
 function App() {
   const [myInfor, setMyInfor] = useState(false);
+  const [questions, setQuestions] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [userInput, setUserInput] = useState("");
+  const handleChange = (e) => {
+    setUserInput(e.target.value);
+    console.log(userInput)
+  };
   return (
     <>
       {myInfor ? (
         <Body>
-          <Header setMyInfor={setMyInfor} />
+          <Header setMyInfor={setMyInfor} questions={questions} handleChange={handleChange} setUserInput={setUserInput} 
+          userInput={userInput} setFilteredQuestions={setFilteredQuestions} filteredQuestions={filteredQuestions} />
           <ContentBody>
             <Container>
               <Sidebar />
               <Routes>
-                <Route exact path="/question" element={<QuestionsListPage myInfor={myInfor} />} />
+                <Route exact path="/question" element={<QuestionsListPage myInfor={myInfor} 
+                questions={filteredQuestions.length > 0 ? filteredQuestions : questions} setQuestions={setQuestions} />} />
                 <Route path="/users" element={<UserPage myInfor={myInfor} />} />
                 <Route path="/groups" element={<Companies/>} />
                 <Route path="/questionsubmit" element={<QuestionSubmit myInfor={myInfor} />} />

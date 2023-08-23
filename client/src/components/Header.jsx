@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }from 'react';
 import styled from "styled-components";
 import Searchfilter from "./SearchFilter";
 import { Link } from 'react-router-dom';
@@ -87,18 +87,45 @@ const SearchContainer = styled.form`
     font-weight: bold;
   }
 `;
-export default function Header({ setMyInfor }) {
+const Dummyinput = styled.input`
+    display: none;
+`;
+
+export default function Header({ setMyInfor, questions, handleChange, userInput, setFilteredQuestions, filteredQuestions }) {
     const handleLogOut = () => {
         setMyInfor(false)
     }
+    const [toggleState, setToggleState] = useState(0);
+    const keyword = userInput.toLowerCase();
+
+    const activeEnter = (e) => {
+        if(e.key === "Enter" && userInput !== '') {
+          questionFilter();
+          console.log(filteredQuestions)
+          console.log(questions)
+        }
+      }
+    const questionFilter = () =>{
+        setFilteredQuestions(questions.filter(qusetion => { 
+          if (toggleState === 0){
+            return qusetion.title.toLowerCase().includes(keyword)
+          } else if (toggleState === 1){
+            return qusetion.writer.toLowerCase().includes(keyword)
+          } else {
+            return qusetion.questionTags.some(tag => {
+                return tag.tag.tagTitle.toLowerCase().includes(keyword);
+          })
+        }
+    }))};
     return (
         <Container>
             <HeaderContainer>
                 <LogoContainer><img src="/SOicon.svg" alt='logo'/>Yeongho overflow</LogoContainer>
-                <Searchfilter/>
+                <Searchfilter toggleState={toggleState} setToggleState={setToggleState}/>
                 <SearchContainer>
                     <img src="/search.svg" alt='searchIcon'/>
-                    <input type="text" placeholder="검색..."/>
+                    <input type="text" placeholder="검색..." onChange={handleChange} onKeyDown={(e) => activeEnter(e)}/>
+                    <Dummyinput type='text'/>
                 </SearchContainer>
                 <ImageContainer><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt='profile'/></ImageContainer>
                 <CustomLink to={'/mypage'}><Button>마이페이지</Button></CustomLink>
